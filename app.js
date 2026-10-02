@@ -15,6 +15,19 @@ function scoreFor(id) {
   return row ? row.best : null;
 }
 
+function resetSet(id) {
+  if (scoreFor(id) === null) return;
+  if (!confirm("Clear this set so it shows as not answered?")) return;
+  delete state.scores[id];
+  saveScores(state.scores);
+  if (state.setId === id) {
+    state.view = "home";
+    state.setId = null;
+    state.picks = [];
+  }
+  draw();
+}
+
 function renderOverall() {
   const done = QUIZ.sets.filter((set) => scoreFor(set.id) !== null).length;
   const answered = QUIZ.sets.reduce((sum, set) => sum + (state.scores[set.id]?.best || 0), 0);
@@ -40,14 +53,25 @@ function home() {
     grid.className = "grid";
     QUIZ.sets.filter((set) => set.day === day).forEach((set) => {
       const best = scoreFor(set.id);
-      const button = el(`<button class="card" type="button">
-        <div class="set-no">Set ${set.id} of 20</div>
-        <h3>${set.title}</h3>
-        <div class="meta">${best === null ? "Not started" : `Best score ${best}/10`}</div>
-        <div class="bar"><i style="width:${best === null ? 0 : best * 10}%"></i></div>
-      </button>`);
-      button.addEventListener("click", () => startSet(set.id));
-      grid.appendChild(button);
+      const card = el(`<article class="card">
+        <div class="set-no"></div>
+        <h3></h3>
+        <div class="meta"></div>
+        <div class="bar"><i></i></div>
+        <div class="card-actions"><button class="ghost reset" type="button">Reset</button></div>
+      </article>`);
+      card.querySelector(".set-no").textContent = `Set ${set.id} of 20`;
+      card.querySelector("h3").textContent = set.title;
+      card.querySelector(".meta").textContent = best === null ? "Not started" : `Best score ${best}/10`;
+      card.querySelector(".bar i").style.width = best === null ? "0%" : `${best * 10}%`;
+      const reset = card.querySelector(".reset");
+      reset.disabled = best === null;
+      reset.addEventListener("click", (event) => {
+        event.stopPropagation();
+        resetSet(set.id);
+      });
+      card.addEventListener("click", () => startSet(set.id));
+      grid.appendChild(card);
     });
     block.appendChild(grid);
     root.appendChild(block);
@@ -153,6 +177,7 @@ function resultView() {
         <p class="meta">${set.title}</p>
       </div>
       <div>
+        <button class="ghost reset" type="button" id="reset">Reset</button>
         <button class="ghost" type="button" id="retry">Try again</button>
         <button class="primary" type="button" id="done">All sets</button>
       </div>
@@ -178,6 +203,7 @@ function resultView() {
     review.appendChild(item);
   });
   root.appendChild(review);
+  root.querySelector("#reset").addEventListener("click", () => resetSet(set.id));
   root.querySelector("#retry").addEventListener("click", () => startSet(set.id));
   root.querySelector("#done").addEventListener("click", () => { state.view = "home"; draw(); });
   return root;

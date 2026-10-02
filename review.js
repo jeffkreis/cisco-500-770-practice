@@ -15,6 +15,19 @@ function scoreFor(id) {
   return row ? row.best : null;
 }
 
+function resetSet(id) {
+  if (scoreFor(id) === null) return;
+  if (!confirm("Clear this set so it shows as not answered?")) return;
+  delete state.scores[id];
+  saveScores(state.scores);
+  if (state.setId === id) {
+    state.view = "home";
+    state.setId = null;
+    state.picks = [];
+  }
+  draw();
+}
+
 function currentSet() {
   return REVIEW.sets.find((set) => set.id === state.setId);
 }
@@ -57,19 +70,27 @@ function home() {
     REVIEW.sets.filter((set) => set.day === day).forEach((set) => {
       const best = scoreFor(set.id);
       const total = set.questions.length;
-      const button = el(`<button class="card" type="button">
-        <div class="set-no">Set ${set.id} of ${REVIEW.sets.length}</div>
+      const card = el(`<article class="card">
+        <div class="set-no"></div>
         <h3></h3>
         <div class="meta"></div>
         <div class="bar"><i></i></div>
-      </button>`);
-      button.querySelector("h3").textContent = set.title;
-      button.querySelector(".meta").textContent = best === null
+        <div class="card-actions"><button class="ghost reset" type="button">Reset</button></div>
+      </article>`);
+      card.querySelector(".set-no").textContent = `Set ${set.id} of ${REVIEW.sets.length}`;
+      card.querySelector("h3").textContent = set.title;
+      card.querySelector(".meta").textContent = best === null
         ? `${total} question${total === 1 ? "" : "s"}`
         : `Best score ${best}/${total}`;
-      button.querySelector(".bar i").style.width = best === null ? "0%" : `${(best / total) * 100}%`;
-      button.addEventListener("click", () => startSet(set.id));
-      grid.appendChild(button);
+      card.querySelector(".bar i").style.width = best === null ? "0%" : `${(best / total) * 100}%`;
+      const reset = card.querySelector(".reset");
+      reset.disabled = best === null;
+      reset.addEventListener("click", (event) => {
+        event.stopPropagation();
+        resetSet(set.id);
+      });
+      card.addEventListener("click", () => startSet(set.id));
+      grid.appendChild(card);
     });
     block.appendChild(grid);
     root.appendChild(block);
@@ -246,7 +267,12 @@ function resultView() {
   done.type = "button";
   done.id = "done";
   done.textContent = "All sets";
-  actions.append(retry, done);
+  const reset = document.createElement("button");
+  reset.className = "ghost reset";
+  reset.type = "button";
+  reset.textContent = "Reset";
+  reset.addEventListener("click", () => resetSet(set.id));
+  actions.append(reset, retry, done);
   head.append(titles, actions);
   root.appendChild(head);
 

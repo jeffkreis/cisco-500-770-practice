@@ -106,8 +106,12 @@ footer {
   text-align: left;
   color: inherit;
   width: 100%;
+  cursor: pointer;
 }
 .card:hover { border-color: #c9b48a; }
+.card-actions { display: flex; justify-content: flex-end; margin-top: 12px; }
+.reset { color: var(--bad); font-size: 13px; padding: 6px 12px; }
+.reset:disabled { opacity: 0.4; cursor: not-allowed; }
 .set-no { color: var(--gold); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 .card h3 { margin: 6px 0 8px; font-size: 18px; font-family: Palatino, serif; font-weight: 500; }
 .meta { color: var(--muted); font-size: 13px; }
@@ -121,6 +125,7 @@ footer {
   align-items: flex-start;
   margin-bottom: 18px;
 }
+.result-head > div:last-child { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .ghost, .primary, .choice {
   border-radius: 999px;
   border: 1px solid var(--line);
