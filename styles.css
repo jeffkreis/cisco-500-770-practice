@@ -173,6 +173,15 @@ footer {
 .item.wrong { background: var(--bad-bg); }
 .item p { margin: 6px 0; }
 .why { color: var(--muted); }
+.match { display: grid; gap: 14px; }
+.match-row {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+.match-row p { margin: 0 0 8px; font-weight: 600; }
+.match-answer { white-space: pre-line; }
 
 @media (max-width: 720px) {
   .top, .quiz-head, .result-head { flex-direction: column; }
