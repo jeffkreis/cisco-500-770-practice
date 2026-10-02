@@ -1,0 +1,587 @@
+[
+  {
+    "id": 16,
+    "day": "Day 4 · Secure campus",
+    "title": "SD-Access fabric",
+    "questions": [
+      {
+        "q": "Which scaling problem does the course blame on a traditional campus?",
+        "choices": [
+          "Identity services assign a tag before any device connects",
+          "Spanning tree is removed, so loops are impossible",
+          "The underlay cannot forward IP",
+          "More device types create more VLANs and subnets, policy stays tied to location, and the same change is typed into many switches"
+        ],
+        "answer": 3,
+        "why": "The course turns that technical sprawl into a business problem: slower onboarding, longer change windows, misconfiguration, and inconsistent security."
+      },
+      {
+        "q": "In a campus fabric, what is the underlay?",
+        "choices": [
+          "A VLAN stretched from the access closet to the data center",
+          "The logical network that carries segmentation the physical network does not have to understand",
+          "The guest captive portal",
+          "The physical IP network that provides reachability, redundancy, and a simple transport"
+        ],
+        "answer": 3,
+        "why": "The overlay is the logical topology, with examples such as VXLAN, LISP, and EVPN. The course prefers carrying segmentation in the overlay so the underlay can stay simple."
+      },
+      {
+        "q": "Which protocol set does the course show for the Cisco SD-Access fabric, in contrast with a long list of legacy campus protocols?",
+        "choices": [
+          "IS-IS, VXLAN, and LISP",
+          "CAPWAP as both the control plane and the data plane for wired hosts",
+          "Spanning tree, VTP, HSRP, and VLAN trunks between every fabric node",
+          "LDP, VPLS, and a pseudowire for every user"
+        ],
+        "answer": 0,
+        "why": "The simplification slide reduces the operator’s view to a fabric of IS-IS, VXLAN, and LISP, automated from Catalyst Center, instead of configuring every legacy feature by hand."
+      },
+      {
+        "q": "Which SD-Access role connects users and devices, authenticates them through ISE, and encapsulates their traffic into VXLAN?",
+        "choices": [
+          "The control-plane node",
+          "The fusion firewall",
+          "The border node",
+          "The fabric edge node"
+        ],
+        "answer": 3,
+        "why": "The control-plane node tracks endpoint identity and location with LISP. The border node connects the fabric to outside networks and handles routing between virtual networks and external destinations."
+      },
+      {
+        "q": "What do an endpoint identifier and a routing locator mean in SD-Access LISP?",
+        "choices": [
+          "They are the active and standby supervisors",
+          "The endpoint identifier is a VLAN number, and the routing locator is a spanning-tree priority",
+          "The endpoint identifier is the access-point channel, and the routing locator is the SSID",
+          "The endpoint identifier is who the host is, usually its IP address. The routing locator is where that host is attached right now"
+        ],
+        "answer": 3,
+        "why": "LISP separates identity from location, so a user can move without a redesign of the network. Edge nodes register and request those mappings from the control plane."
+      },
+      {
+        "q": "What does the SD-Access VXLAN header carry so segmentation survives the trip across the underlay?",
+        "choices": [
+          "Only the spanning-tree root bridge ID",
+          "A new physical VLAN on every hop",
+          "The Wi-Fi passphrase",
+          "The virtual network and the Security Group Tag, along with the original frame"
+        ],
+        "answer": 3,
+        "why": "The data-plane picture encapsulates the original frame in VXLAN and includes the SGT and the virtual network, so the underlay forwards IP and the overlay keeps policy."
+      },
+      {
+        "q": "How does SD-Access express macro-segmentation?",
+        "choices": [
+          "A campus-wide VLAN for each department",
+          "A Security Group Tag by itself, with every group in one routing table",
+          "An open SSID with no authentication",
+          "A virtual network, implemented as a VRF, isolates a major group such as corporate, guest, IoT, OT, or PCI. Traffic does not cross virtual networks unless you design that path"
+        ],
+        "answer": 3,
+        "why": "Inter-virtual-network traffic is not automatic. The course points to a fusion device as the place to insert a firewall when groups must communicate."
+      },
+      {
+        "q": "A compromised employee device tries to reach sensitive systems inside the same SD-Access virtual network. Which capability limits that lateral movement?",
+        "choices": [
+          "The virtual network alone, which already separates every user from every other user",
+          "Security Group Tags, which micro-segment endpoint groups inside the broader virtual network",
+          "The initial ISE login, which continues to filter every later packet without group policy",
+          "Dynamic VLAN assignment, which is the fine-grained control inside one virtual network"
+        ],
+        "answer": 1,
+        "why": "The review item distinguishes the broad separation of virtual networks from the finer SGT control used when the attacker is already inside the same virtual network."
+      },
+      {
+        "q": "A customer needs a new isolated network for a business unit and does not want to change the physical underlay. How does a fabric do that?",
+        "choices": [
+          "The team creates the new logical segment in the overlay",
+          "The team adds a dedicated routing process on every underlay device along the path",
+          "The team extends a new VLAN across every underlay switch",
+          "The team rewrites underlay routing policy so the new group is isolated hop by hop"
+        ],
+        "answer": 0,
+        "why": "The review answer is the overlay. The underlay stays the simple routed transport, and the new segment does not require a new physical topology."
+      },
+      {
+        "q": "What does SD-Access change about wireless forwarding?",
+        "choices": [
+          "The controller still switches every user packet, and wired policy stays on the access switch only",
+          "Each SSID must be a separate physical network",
+          "Wireless traffic enters the fabric and no longer has to hairpin through the controller. The controller keeps control and wireless services, and ISE holds policy for both wired and wireless",
+          "Wireless clients cannot roam inside a fabric"
+        ],
+        "answer": 2,
+        "why": "The course contrasts separate wired and wireless policy and data planes with one policy point in ISE and a distributed fabric data plane."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "day": "Day 4 · Secure campus",
+    "title": "EVPN, fabrics, and a secure campus",
+    "questions": [
+      {
+        "q": "Which description matches a BGP EVPN campus fabric?",
+        "choices": [
+          "A single Layer 2 domain running spanning tree between every access switch",
+          "A wireless mesh with one radio for clients and one for backhaul",
+          "An SD-WAN overlay using OMP and TLOCs",
+          "A routed Layer 3 underlay with a VXLAN overlay, using BGP EVPN so leaves learn endpoints in the control plane instead of by flooding"
+        ],
+        "answer": 3,
+        "why": "Route reflectors avoid a full BGP mesh. VNIs separate Layer 2 and Layer 3 segments. VTEPs, usually the leaves, encapsulate and de-encapsulate VXLAN."
+      },
+      {
+        "q": "How do macro-segmentation and micro-segmentation show up in the EVPN pictures?",
+        "choices": [
+          "Private VLANs are the only segmentation tool, and VXLAN cannot carry a tag",
+          "EVPN isolates groups by giving each user a dedicated SSID",
+          "The spine rewrites every access list on the underlay",
+          "VRFs and Layer 3 VNIs separate major groups. Security Group Tags can ride in the VXLAN group-based policy field for finer control"
+        ],
+        "answer": 3,
+        "why": "The macro slide uses VRFs and L3 VNIs. The micro slide uses SGTs carried as group-based policy metadata across the fabric."
+      },
+      {
+        "q": "Why does the course treat wireless roaming as a design caution on an EVPN campus fabric?",
+        "choices": [
+          "EVPN cannot forward any wireless traffic",
+          "Wi-Fi clients do not move in a campus",
+          "Roaming is free because the mapping lives only in DRAM on one control-plane node",
+          "A roam can require updates on the access switches across the fabric, so client count, switch count, and roam scope all affect scale. Centralized wireless is the generally recommended approach"
+        ],
+        "answer": 3,
+        "why": "The wireless consideration slide says every access switch may have to learn the roam, and it points to centralized wireless, or wireless over the top, as the usual recommendation."
+      },
+      {
+        "q": "What do SD-Access with LISP and BGP EVPN have in common in this course?",
+        "choices": [
+          "A routed underlay that removes spanning tree between fabric nodes, a VXLAN overlay, and both macro-segmentation and micro-segmentation",
+          "Both integrate the wireless LAN controller the same way and have the same scale limit",
+          "Both require a stretched Layer 2 underlay",
+          "Both are proprietary and have no IETF documents cited in the deck"
+        ],
+        "answer": 0,
+        "why": "The comparison slide lists those shared traits and cites LISP and BGP EVPN as proposed IETF standards. The differences are where the sales conversation continues."
+      },
+      {
+        "q": "Where does the course say EVPN’s endpoint scale is limited?",
+        "choices": [
+          "By the smallest hardware forwarding table on the access switches, because every access switch tracks endpoint location in TCAM",
+          "By the PoE budget of the core",
+          "By the number of SSIDs advertised on 2.4 GHz",
+          "By the DRAM of one selected mapping node, which is the LISP model"
+        ],
+        "answer": 0,
+        "why": "LISP tracks location in DRAM on a selected device. EVPN uses the hardware table on all access switches. The course’s example of a 32K table supports about 4,500 dual-stacked hosts, because IPv6 consumes extra entries."
+      },
+      {
+        "q": "What happens if you pull an EVPN fabric back to the aggregation layer so you can use a larger forwarding table?",
+        "choices": [
+          "The access layer becomes a LISP control plane automatically",
+          "Wireless and wired policy stay unified and the underlay stays free of VLANs",
+          "You regain table space and give up the simplification, because Layer 2 features, spanning tree, and the old access design return, along with the loss of unified wired and wireless",
+          "Scale becomes unlimited without any other tradeoff"
+        ],
+        "answer": 2,
+        "why": "Workaround one uses the larger aggregation tables, such as 256K, and the next slide says it reintroduces complexity. Splitting into several fabrics also drops stretched Layer 2 and unified wireless."
+      },
+      {
+        "q": "The course compares a simultaneous roam of about 400 students. Why can LISP stay smaller than EVPN in that story?",
+        "choices": [
+          "EVPN sends one update no matter how many switches exist",
+          "LISP floods the roam to every leaf, and EVPN updates only one controller",
+          "Neither control plane notices a roam",
+          "LISP updates the mapping system a couple of times per roam, while EVPN updates grow with the number of switches in the fabric"
+        ],
+        "answer": 3,
+        "why": "The table keeps LISP at 800 updates for that roam event across 20, 50, 100, or 200 switches, while the EVPN column climbs from 30,400 to 318,400."
+      },
+      {
+        "q": "Which reason does the course give for leading with LISP and SD-Access rather than leading with EVPN?",
+        "choices": [
+          "LISP has no IETF specification",
+          "Mobility and unified wired and wireless, scale that is not capped by the smallest access switch, and a campus design rather than one driven by service-provider and data-center use",
+          "EVPN is the only fabric that integrates a wireless LAN controller",
+          "EVPN cannot be an open standard"
+        ],
+        "answer": 1,
+        "why": "The lead-with-LISP slide also notes that campus equipment is not always in EVPN interoperability testing, and that automation tools can create lock-in even when the forwarding standard is open."
+      },
+      {
+        "q": "Which hardware and software protections does the secure-campus summary stack on a Catalyst platform?",
+        "choices": [
+          "A Trust Anchor with SUDI, secure boot, image signing, and runtime defenses, with the course marking that path as quantum-safe using post-quantum cryptography",
+          "An unsigned image loaded from any USB stick",
+          "WEP on the management port",
+          "A shared administrator password and Telnet"
+        ],
+        "answer": 0,
+        "why": "The protection slide lines those controls up against tampering, binary attacks, runtime attacks, and BIOS or ROMMON attacks. Secure boot was introduced earlier with the same Trust Anchor idea."
+      },
+      {
+        "q": "A customer can start at different points and still build toward a secure campus. Which sequence matches the course’s menu?",
+        "choices": [
+          "Trustworthy hardware and software, an architecture that fits the customer, transport and wireless protection, endpoint visibility, segmentation, and monitoring",
+          "One flat VLAN, then a permanent exception for every new device",
+          "Guest Wi-Fi only, because the campus no longer uses wired access",
+          "Monitoring first, with no need for identity or segmentation"
+        ],
+        "answer": 0,
+        "why": "The summary is start anywhere and build up: secure the platform, build the network, secure connectivity, see who and what connects, segment with virtual networks and Security Group Tags, and monitor for vulnerable, misconfigured, outdated, or end-of-support devices."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "day": "Day 5 · Wireless",
+    "title": "Radio, spectrum, and Wi-Fi generations",
+    "questions": [
+      {
+        "q": "Where does the course place Wi-Fi in the TCP/IP stack?",
+        "choices": [
+          "On the link, covering the physical and data-link work of carrying frames over radio",
+          "Only at the transport layer, as a replacement for TCP",
+          "In the routing protocol between campus cores",
+          "At the application layer, next to HTTP"
+        ],
+        "answer": 0,
+        "why": "The mapping slide combines OSI physical and data link into the TCP/IP link. The generation timeline runs from 802.11a and 802.11b through Wi-Fi 7, which is 802.11be."
+      },
+      {
+        "q": "Which radio statement matches the course?",
+        "choices": [
+          "SNR can be improved only by raising transmit power, never by reducing noise",
+          "6 GHz travels farther than 2.4 GHz in free space at the same power",
+          "dBm is a relative gain with no reference, and dB is an absolute power in milliwatts",
+          "Higher frequencies have higher free-space path loss, so 6 GHz needs more power or antenna gain than 2.4 GHz to hold the same cell and the same received level"
+        ],
+        "answer": 3,
+        "why": "dBm is power relative to 1 milliwatt. RSSI measures how well a device receives the signal. SNR is that signal after noise, improved by a stronger signal or less noise."
+      },
+      {
+        "q": "A customer compares older access points that use antenna diversity with MIMO access points. What advantage does the course give MIMO?",
+        "choices": [
+          "MIMO removes the need for any retransmission when interference appears",
+          "Antenna diversity bonds channels into one wider channel",
+          "MIMO can use several radio chains and several signal paths at the same time to raise throughput and reliability",
+          "Antenna diversity lets several clients transmit at once on one radio chain"
+        ],
+        "answer": 2,
+        "why": "Diversity was the older way to pick a better copy of one signal. Spatial multiplexing then sends different streams in parallel. Single-user MIMO raises one client’s throughput. Multi-user MIMO raises capacity under load."
+      },
+      {
+        "q": "A busy office on Wi-Fi 5 stalls when many users send small amounts of data at once. Which Wi-Fi 6 behavior does the course credit with helping?",
+        "choices": [
+          "MU-MIMO removes all contention for the medium",
+          "RTS/CTS becomes mandatory for every frame so collisions cannot occur",
+          "OFDMA lets the access point serve several devices in one transmission opportunity by giving them resource units",
+          "OFDM raises client transmit power to overpower the noise"
+        ],
+        "answer": 2,
+        "why": "The review item’s answer is OFDMA. OFDM gives the whole channel to one transmitter at a time. Wi-Fi remains a shared half-duplex medium, and two clients can still fail to hear each other and collide at the access point."
+      },
+      {
+        "q": "Users farther from the access point get lower throughput even though their devices are the same model. What does the course say is happening?",
+        "choices": [
+          "The access point turns off retransmissions for weak clients",
+          "As signal quality falls, Wi-Fi steps down to a lower modulation and coding rate so the connection stays reliable",
+          "Distant clients are forced onto fewer channels",
+          "The access point narrows the channel width whenever a client walks away"
+        ],
+        "answer": 1,
+        "why": "Larger constellations carry more bits per symbol and need higher SNR, so they work near the access point. QPSK sits below 16-QAM, 64-QAM, 256-QAM, and 1024-QAM. The rate adapts per client."
+      },
+      {
+        "q": "Why does the course care how many channels a band has?",
+        "choices": [
+          "Bonding channels always increases both peak speed and the number of clean channels",
+          "Non-Wi-Fi devices such as microwaves and weather radar cannot affect Wi-Fi",
+          "More non-overlapping channels let neighboring access points avoid sharing airtime. 2.4 GHz has three clean channels, 1, 6, and 11, while 5 GHz and 6 GHz have many more",
+          "All three bands have the same three channels, so density does not change the design"
+        ],
+        "answer": 2,
+        "why": "The spectrum table gives 2.4 GHz about 60 MHz and three 20 MHz channels, 5 GHz about 500 MHz and 25 channels, and 6 GHz in the United States about 1,200 MHz and 59 channels. Wider bonding buys peak rate and spends channels."
+      },
+      {
+        "q": "Which improvements does the course attach to Wi-Fi 7?",
+        "choices": [
+          "A new requirement that every client use only 2.4 GHz",
+          "Removal of OFDMA so each client waits its turn",
+          "320 MHz channels, 4K-QAM, multi-resource-unit allocation, preamble puncturing, and multi-link operation across bands",
+          "A return to 20 MHz-only channels and WEP"
+        ],
+        "answer": 2,
+        "why": "4K-QAM needs very high SNR. Preamble puncturing lets a wide channel skip an interfered slice. Multi-link operation can use 2.4, 5, and 6 GHz together and keep going if one band gets congested."
+      },
+      {
+        "q": "The course describes Wi-Fi performance as which three dimensions?",
+        "choices": [
+          "Open authentication, WEP, and TKIP",
+          "MPLS labels, VRFs, and route reflectors",
+          "Modulation, limited by SNR; spatial multiplexing, limited by what the client can do; and channel width, limited by available spectrum",
+          "PoE budget, stack cables, and supervisor count"
+        ],
+        "answer": 2,
+        "why": "The design summary adds that airtime is the scarce resource, slow clients consume a disproportionate share of it, and smaller cells plus a clean channel plan are how density scales."
+      },
+      {
+        "q": "Which maximum rates does the course print on the Wi-Fi generation slide?",
+        "choices": [
+          "Every generation since 802.11b tops out at 54 Mbps",
+          "Wi-Fi 7 is limited to the 11 Mbps of 802.11b",
+          "802.11n up to 600 Mbps, 802.11ac up to 7 Gbps, 802.11ax up to 9.6 Gbps, and 802.11be up to 23 Gbps",
+          "Wi-Fi 6 is slower than Wi-Fi 4 because OFDMA reduces the peak rate"
+        ],
+        "answer": 2,
+        "why": "Those are the course’s stated maximums, along with the features that produce them: 64-QAM and 40 MHz for Wi-Fi 4, 256-QAM for Wi-Fi 5, 1024-QAM and OFDMA for Wi-Fi 6, and 4096-QAM, 320 MHz, and multi-link operation for Wi-Fi 7."
+      },
+      {
+        "q": "How does the course compare 2.4 GHz with 5 GHz and 6 GHz?",
+        "choices": [
+          "2.4 GHz has more than fifty non-overlapping 20 MHz channels",
+          "2.4 GHz reaches farther and propagates better, but it is crowded and short of channels. 5 GHz and 6 GHz are cleaner and have more channels, with shorter range and less support on old devices",
+          "6 GHz has the best range and the most non-Wi-Fi interference",
+          "5 GHz cannot be used for an enterprise SSID"
+        ],
+        "answer": 1,
+        "why": "The activity solution draws exactly that contrast. Extra spectrum matters because 2.4 and 5 GHz are already congested and wide channels are hard to reuse there."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "day": "Day 5 · Wireless",
+    "title": "SSIDs and deployment models",
+    "questions": [
+      {
+        "q": "Which wireless terms match the course?",
+        "choices": [
+          "An extended service set is a single access point with no roaming",
+          "The basic service set is the service an access point offers, named by the SSID. The basic service area is the cell. An extended service set is one logical Wi-Fi network across cells",
+          "An SSID is a routing protocol, and a cell is a VRF",
+          "The access point routes at Layer 3 and does not bridge 802.11 to Ethernet"
+        ],
+        "answer": 1,
+        "why": "The access point is a translational bridge between 802.11 wireless and 802.3 Ethernet. In the autonomous and Flex pictures, each SSID maps to a VLAN and a subnet."
+      },
+      {
+        "q": "A campus already has SSIDs for employees, contractors, and guests, and wants new SSIDs for finance, HR, engineering, printers, cameras, and IoT. What does the course recommend?",
+        "choices": [
+          "Create one SSID per access point so roaming is impossible",
+          "Add every department as its own SSID, because beacons are free",
+          "Keep the SSID count small. Extra SSIDs spend airtime. Differentiate access with identity, dynamic VLANs, or Security Group Tags",
+          "Put all of those groups on one open SSID and rely on users to behave"
+        ],
+        "answer": 2,
+        "why": "The activity solution says more SSIDs increase contention and reduce performance. A few SSIDs plus policy is the segmentation approach."
+      },
+      {
+        "q": "Which client conditions does the course list as reasons to roam?",
+        "choices": [
+          "A change in the switch’s PoE budget",
+          "The access point rebooting its wired uplink only",
+          "An MPLS label expiring",
+          "Too many retries, low RSSI, low SNR, and the client’s own roaming thresholds"
+        ],
+        "answer": 3,
+        "why": "Those are the roaming triggers on the overview slide. Enterprise Wi-Fi then has to make that roam fast across hundreds of access points."
+      },
+      {
+        "q": "Which security changes does the course attribute to WPA3?",
+        "choices": [
+          "It removes WEP, TKIP, and SHA-1, can encrypt an open network without a password, and is required for Wi-Fi 6E and Wi-Fi 7 certification in 6 GHz",
+          "It restores WEP as the strongest enterprise cipher",
+          "It is optional on 6 GHz and mandatory only on 2.4 GHz",
+          "It replaces 802.1X with a single pre-shared key for every employee"
+        ],
+        "answer": 0,
+        "why": "Opportunistic Wireless Encryption protects open networks. WPA3 also hardens personal networks against offline guessing and reduces some disruption attacks. It can coexist with WPA2 on 2.4 and 5 GHz for older clients."
+      },
+      {
+        "q": "What does the course say makes enterprise Wi-Fi different from a small home network?",
+        "choices": [
+          "Scale, WPA3-Enterprise with 802.1X, segmentation, fast roaming, radio optimization, high availability, and central operations",
+          "Channel planning is unnecessary once the client supports Wi-Fi 6",
+          "A single pre-shared key and one access point are enough for thousands of clients",
+          "Enterprise networks skip authentication so roaming is faster"
+        ],
+        "answer": 0,
+        "why": "The slide groups the difference into scale, security, reliability, and operations: hundreds of access points, thousands of clients, and centralized management."
+      },
+      {
+        "q": "Which deployment fits a small office with one or two access points that must keep working with no controller?",
+        "choices": [
+          "A pair of large wireless LAN controllers in another country",
+          "SD-Access fabric wireless",
+          "A campus gateway cluster",
+          "Autonomous access points"
+        ],
+        "answer": 3,
+        "why": "Autonomous mode is simple and survives a WAN outage, and the course limits it to very small sites. It scales poorly, policy drifts, roaming is harder, and radios are not coordinated."
+      },
+      {
+        "q": "A large campus has many access points and people walking between buildings. The activity solution points to which model?",
+        "choices": [
+          "A centralized wireless LAN controller, for coordinated policy, roaming, and radio management",
+          "A mesh that uses 2.4 GHz for backhaul and has no wired access points",
+          "One SSID per building with no shared controller",
+          "Autonomous access points, because a campus should not have a controller"
+        ],
+        "answer": 0,
+        "why": "Centralized mode splits work between the access point and the controller and uses CAPWAP. The cautions are controller dependency, scale, and WAN dependency at remote sites. FlexConnect is the course’s answer when remote traffic should stay local."
+      },
+      {
+        "q": "A retail chain wants central management of access points, with user traffic switched locally in each store. Which model does the activity solution name?",
+        "choices": [
+          "Autonomous access points with no central management",
+          "FlexConnect",
+          "OpenRoaming as the store’s only WLAN design",
+          "A full tunnel of every store’s traffic to one data-center controller"
+        ],
+        "answer": 1,
+        "why": "FlexConnect keeps the controller for management and policy while local switching avoids a WAN hairpin. The coffee-shop chain in the same activity is the cloud-managed example, because new sites need a repeatable, remote setup."
+      },
+      {
+        "q": "How does the course describe a Meraki campus gateway?",
+        "choices": [
+          "An on-premises LISP control-plane node",
+          "A replacement for 802.1X on the wired closet",
+          "A cloud-managed cluster that centrally switches selected SSIDs over a Layer 2 overlay, so the campus does not have to stretch one large VLAN for every client",
+          "A UWB tag that reports asset location"
+        ],
+        "answer": 2,
+        "why": "Meraki management goes to the dashboard, while user data can stay local. The campus gateway is the course’s answer when cloud management would otherwise extend a large Layer 2 domain. Tunnels can be VXLAN, QUIC, or Meraki, per SSID."
+      },
+      {
+        "q": "A university wants the same policy and segmentation for wired and wireless users. Which deployment does the activity solution choose?",
+        "choices": [
+          "A guest portal with no identity",
+          "Autonomous access points, because policy should be configured on each radio",
+          "Ultra-reliable wireless backhaul for student laptops",
+          "SD-Access wireless, with CAPWAP for control, VXLAN for the data plane, and policy from ISE"
+        ],
+        "answer": 3,
+        "why": "Fabric-enabled access points switch locally in the fabric, the controller keeps the control plane, and Catalyst Center automates it. A mesh is a different tool: one radio serves clients and another is the wireless backhaul."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "day": "Day 5 · Wireless",
+    "title": "OpenRoaming, location, and URWB",
+    "questions": [
+      {
+        "q": "What problem does OpenRoaming address, and how?",
+        "choices": [
+          "It assigns Security Group Tags on a wired printer",
+          "Painful or insecure guest onboarding. Access providers and identity providers federate so a user can join securely with a trusted identity and without a new captive-portal ritual",
+          "It is a Layer 3 VPN for site-to-site traffic",
+          "It replaces the campus core with a wireless LAN controller"
+        ],
+        "answer": 1,
+        "why": "The course ties OpenRoaming to higher Wi-Fi adoption, zero-touch onboarding, and Cisco Spaces. It fits busy public venues. It is less compelling for a small staff-only site that is already happy with simple guest Wi-Fi."
+      },
+      {
+        "q": "Which OpenRoaming example matches carrier offload?",
+        "choices": [
+          "A stadium, airport, or hospital shifts indoor users from cellular onto Wi-Fi to improve coverage where the cell signal is weak",
+          "A factory AGV keeps a make-before-break radio link",
+          "A switch enables Perpetual PoE for a camera",
+          "A branch router backhauls Office 365 to the data center"
+        ],
+        "answer": 0,
+        "why": "Offload is automatic movement between cellular and Wi-Fi, positioned as a complement to a distributed antenna system. Other examples are conference onboarding and loyalty experiences in retail or venues."
+      },
+      {
+        "q": "How does the course separate presence from location?",
+        "choices": [
+          "Presence and location both require ultra-wideband and cannot use Wi-Fi",
+          "Presence asks whether a device is in an area and can be answered from one access point. A position needs measurements from several access points: one gives an area, two a line, and three or more a point",
+          "One access point always yields a sub-meter point",
+          "Location works only if the device is associated to 6 GHz"
+        ],
+        "answer": 1,
+        "why": "RSSI location improves when four or five access points hear the device. A connectivity design is not automatically a location design. Density, placement, overlap, and a perimeter matter."
+      },
+      {
+        "q": "Which accuracy ranges does the course’s technology table give?",
+        "choices": [
+          "Wi-Fi RSSI is sub-meter in any office with one access point",
+          "All three technologies have the same accuracy, so the tag cost does not matter",
+          "Wi-Fi RSSI about 7 to 10 meters, or about 2 to 3 meters with fine-timing measurement; BLE about 3 to 5 meters; ultra-wideband under 1 meter",
+          "BLE is always under 1 meter, and ultra-wideband is only useful beyond 50 meters"
+        ],
+        "answer": 2,
+        "why": "Wi-Fi uses the existing network and needs no tag for a connected client. BLE tags are cheaper and common for wayfinding. Ultra-wideband is the precision option and costs more in tags and design."
+      },
+      {
+        "q": "A logistics site shows assets in the wrong zones. Tags are transmitting and the application works. What does the review say to check first?",
+        "choices": [
+          "The tags were attached to the wrong assets",
+          "The workflow is not sending data to the dashboard",
+          "The wireless design does not provide enough signal density for the location accuracy they expect",
+          "The software cannot read tag telemetry"
+        ],
+        "answer": 2,
+        "why": "The review item rules out the application and the tags’ transmissions. Location outcomes fail when the radio foundation was designed only for coverage."
+      },
+      {
+        "q": "Indoor wayfinding in the course most often depends on which signal, and what design target does it use?",
+        "choices": [
+          "A private VLAN for each visitor",
+          "BLE, on a denser layout than connectivity, on the order of one access point per 1,000 square feet, with a real perimeter and overlap on corridors and stairs",
+          "A single access point at the building entrance and RSSI from that one radio",
+          "MPLS labels carried in the beacon"
+        ],
+        "answer": 1,
+        "why": "Cisco Spaces supplies the map, the route, and an app-less start such as a QR code. Three access points can make a device positionable. Reliable wayfinding wants more overlap than that minimum. Ultra-wideband is reserved for tighter precision."
+      },
+      {
+        "q": "How does ultra-wideband asset tracking find a tag in the course?",
+        "choices": [
+          "The tag sends short blinks. Several anchors record arrival times, and a location engine uses the time difference of arrival",
+          "The tag joins the corporate SSID and is placed by its DHCP address",
+          "The wireless LAN controller counts beacons and ignores time",
+          "The tag’s RSSI at one access point is converted directly into a sub-meter point"
+        ],
+        "answer": 0,
+        "why": "Uplink time difference of arrival lets the infrastructure locate the tag. Downlink time difference of arrival lets a client compute its own position. The design wants four or more anchors, not a straight line, and the course allows 5 GHz coverage as a first proxy before an on-site check."
+      },
+      {
+        "q": "Which stack does the course show for native asset tracking?",
+        "choices": [
+          "Wi-Fi 7 access points with BLE and ultra-wideband radios, Cisco tags, a Cisco Spaces dashboard, and a mobile app to search and navigate",
+          "A guest captive portal and no tags",
+          "Only a predictive survey, with no anchors",
+          "An SD-WAN controller acting as the location engine"
+        ],
+        "answer": 0,
+        "why": "The outcome still has to match the tool. Floor-level presence can be Wi-Fi. Room-level wayfinding is commonly BLE. Sub-meter finding of a pump or a tool is the ultra-wideband case."
+      },
+      {
+        "q": "A plant keeps one wireless network for office users and another for automated guided vehicles. Why does the course say that split existed?",
+        "choices": [
+          "Office Wi-Fi is built for user throughput, while the vehicles need predictable, low-loss connectivity",
+          "Enterprise Wi-Fi has no spectrum left for industrial traffic",
+          "The standard forbids a phone and a vehicle from using different SSIDs on one infrastructure",
+          "The vehicles need a different IP subnet, and that alone forces a second radio network"
+        ],
+        "answer": 0,
+        "why": "Industrial protocols tolerate little loss, delay, or jitter. The review answer is that difference in purpose, not addressing, spectrum exhaustion, or a ban on mixed device types."
+      },
+      {
+        "q": "Where does ultra-reliable wireless backhaul fit, and which mechanisms does the course name?",
+        "choices": [
+          "Guest Internet in a retail store, using ordinary Wi-Fi only",
+          "Sub-meter location of a wheelchair, which is the ultra-wideband job",
+          "Replacing 802.1X on a wired closet",
+          "Moving assets and places where fiber is impractical. An overlay stays stable, the next link comes up before the old one drops, failover is under 500 milliseconds, and critical traffic can be duplicated across paths"
+        ],
+        "answer": 3,
+        "why": "URWB rides 802.11 and can run on the same access point as enterprise Wi-Fi, with the controller and Catalyst Center for management. It is the course’s choice for AGVs, yards, rail, mines, and a short building-to-building link where fiber is hard. It is not the guest network and not the office laptop network."
+      }
+    ]
+  }
+]

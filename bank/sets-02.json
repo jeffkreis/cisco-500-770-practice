@@ -1,0 +1,587 @@
+[
+  {
+    "id": 6,
+    "day": "Day 2 · WAN",
+    "title": "Services, VPNs, and MPLS",
+    "questions": [
+      {
+        "q": "In the course, the underlay answers which question?",
+        "choices": [
+          "Which SGT to assign a user",
+          "Which tenant or VRF should handle the packet after it arrives",
+          "Which QAM constellation to use",
+          "How sites reach each other and which path traffic takes through the network"
+        ],
+        "answer": 3,
+        "why": "The underlay is reachability and path. The overlay decides tenant, VRF, or service once the packet is at the far edge."
+      },
+      {
+        "q": "A Layer 2 VPN service makes the provider network look like what to the enterprise?",
+        "choices": [
+          "An identity provider",
+          "A logical switch",
+          "A stateful firewall",
+          "A logical router that exchanges BGP routes"
+        ],
+        "answer": 1,
+        "why": "Layer 2 VPNs extend Ethernet. Layer 3 VPNs make the underlay look like a logical router."
+      },
+      {
+        "q": "E-Line, pseudowire, and VPWS are provider terms for which design?",
+        "choices": [
+          "Point-to-point Layer 2 VPN",
+          "Multipoint Layer 3 MPLS VPN",
+          "StackWise Virtual",
+          "Remote browser isolation"
+        ],
+        "answer": 0,
+        "why": "Point-to-point Layer 2 uses those names. VPLS, EVPN, and E-LAN describe multipoint Layer 2."
+      },
+      {
+        "q": "Why does the course pair GRE with IPsec for classic site-to-site routing?",
+        "choices": [
+          "IPsec cannot cross the Internet",
+          "IPsec secures the traffic but does not carry multicast and broadcasts that routing protocols need",
+          "GRE assigns Security Group Tags",
+          "GRE replaces encryption"
+        ],
+        "answer": 1,
+        "why": "The VPN slide says IPsec does not support multicast or broadcasts, which breaks routing protocols unless GRE is added."
+      },
+      {
+        "q": "Which classic VPN fits a large branch design that needs dynamic spoke-to-spoke tunnels over the Internet?",
+        "choices": [
+          "DMVPN",
+          "GETVPN on a private WAN",
+          "Remote browser isolation",
+          "A manually configured tunnel per pair of sites"
+        ],
+        "answer": 0,
+        "why": "The best-fit table maps DMVPN to branch hub-and-spoke with dynamic spoke-to-spoke tunnels. Manual tunnels fit a few static sites."
+      },
+      {
+        "q": "GETVPN is the best fit when the customer needs what?",
+        "choices": [
+          "Group encryption on an existing private WAN without building an overlay, while preserving the original IP header",
+          "Per-application SaaS probing",
+          "Wireless location surveys",
+          "A brand-new public Internet overlay for three sites"
+        ],
+        "answer": 0,
+        "why": "GETVPN uses group IPsec, does not build an overlay, and keeps the IP header, which helps QoS, traffic engineering, and multicast."
+      },
+      {
+        "q": "FlexVPN is distinguished in the deck by which trait?",
+        "choices": [
+          "Tunnel-less encryption that preserves the original header on MPLS",
+          "One IKEv2 framework for site-to-site, hub-and-spoke, and spoke-to-spoke",
+          "SD-WAN control connections only",
+          "A single static tunnel with no routing"
+        ],
+        "answer": 1,
+        "why": "FlexVPN is the modern IKEv2 framework for several topologies. GETVPN is the tunnel-less private-WAN option."
+      },
+      {
+        "q": "What does a VRF give a provider or a large enterprise?",
+        "choices": [
+          "Layer 2 encryption on one hop",
+          "A separate routing table so customers or segments can overlap addresses and stay isolated",
+          "A Wi-Fi basic service set",
+          "A shared global table for every customer"
+        ],
+        "answer": 1,
+        "why": "Each VRF acts as its own Layer 3 network. The same prefixes can exist in different VRFs without conflict."
+      },
+      {
+        "q": "On an MPLS path, a P router forwards a packet based on what?",
+        "choices": [
+          "The original destination IP only",
+          "The Ethernet source MAC only",
+          "The TLS certificate",
+          "The MPLS label, without inspecting the IP header"
+        ],
+        "answer": 3,
+        "why": "The MPLS header slide says the P router uses the label. PE routers impose and dispose of labels at the edge."
+      },
+      {
+        "q": "Why might an enterprise that already owns its WAN still use MPLS?",
+        "choices": [
+          "Because Internet DIA cannot carry IP",
+          "Control, deterministic latency, security and compliance, and legacy OT integration",
+          "Because VRFs do not work on private fiber",
+          "Because MPLS is required for every SaaS application"
+        ],
+        "answer": 1,
+        "why": "The discussion answer lists control and independence, latency and determinism, security and compliance, and legacy OT."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "day": "Day 2 · WAN",
+    "title": "Catalyst SD-WAN",
+    "questions": [
+      {
+        "q": "SD-WAN, as defined in the course, changes the WAN by doing what?",
+        "choices": [
+          "Decoupling the data, control, and management planes and steering applications over multiple transports with centralized policy",
+          "Forcing every flow through one static route",
+          "Removing encryption from branch traffic",
+          "Replacing IP with spanning tree"
+        ],
+        "answer": 0,
+        "why": "The definition is an SDN-style WAN: separated planes, a secure overlay, and application steering from centralized policy."
+      },
+      {
+        "q": "In the Catalyst SD-WAN picture, which component is the management plane?",
+        "choices": [
+          "Controller",
+          "WAN Edge",
+          "Manager",
+          "Validator"
+        ],
+        "answer": 2,
+        "why": "Manager is the single pane for day-0, day-1, and day-2. Controllers distribute control and policy. The validator is the first authentication point. Edges forward data."
+      },
+      {
+        "q": "OMP runs in which role?",
+        "choices": [
+          "A TCP control protocol between WAN Edges and Controllers, inside authenticated TLS or DTLS",
+          "The data-plane cipher that encrypts user packets",
+          "The satellite handoff protocol",
+          "A Layer 2 discovery protocol on the LAN"
+        ],
+        "answer": 0,
+        "why": "OMP advertises routes, TLOCs, and policy between edges and controllers and between controllers, inside TLS or DTLS."
+      },
+      {
+        "q": "How does Catalyst SD-WAN keep segments separate on the data plane?",
+        "choices": [
+          "Segmentation requires the underlay to understand every VLAN",
+          "Guest traffic is sent in the clear",
+          "All users share one global routing table",
+          "Each VPN or VRF keeps its own table, and packets carry a label inside IPsec"
+        ],
+        "answer": 3,
+        "why": "The data-plane slide shows per-VPN tables and an IPsec packet with a label so segmentation does not depend on the underlay."
+      },
+      {
+        "q": "Application-aware routing chooses a path using which kind of information?",
+        "choices": [
+          "The access-switch stack priority",
+          "The lowest interface number only",
+          "The alphabetical order of provider names",
+          "Measured loss, latency, and jitter against an application SLA"
+        ],
+        "answer": 3,
+        "why": "The example compares paths such as 10 ms and 1 percent loss versus 200 ms and 3 percent loss, then pins the application to a compliant path."
+      },
+      {
+        "q": "Zero-touch provisioning for an SD-WAN edge uses which onboarding path?",
+        "choices": [
+          "DHCP and DNS from the ISP to reach the PnP server, then an automatic join to the fabric",
+          "An on-site USB image with no certificates",
+          "A technician pasting a full configuration at every site",
+          "A manual GRE tunnel built before the device boots"
+        ],
+        "answer": 0,
+        "why": "The ZTP example uses PnP, ISP DHCP and DNS, and then secure bring-up into the IPsec fabric."
+      },
+      {
+        "q": "Multi-Region Fabric is used to do what?",
+        "choices": [
+          "Group sites, such as by geography, and restrict overlay tunnels between regions",
+          "Disable OMP between controllers",
+          "Replace IPsec with MACsec on the LAN",
+          "Stretch one VLAN across every country"
+        ],
+        "answer": 0,
+        "why": "MRF lets you define regions, keep topologies different per region, and avoid a full mesh of overlay tunnels between distant sites."
+      },
+      {
+        "q": "Why might a customer keep MPLS after deploying SD-WAN?",
+        "choices": [
+          "Cellular cannot be a backup",
+          "MPLS can still offer predictable performance, an SLA, and low latency for traffic that needs it",
+          "Internet circuits are illegal for enterprise use",
+          "SD-WAN cannot forward traffic unless MPLS is present"
+        ],
+        "answer": 1,
+        "why": "The transport-strategy answer says MPLS may remain for predictability and SLAs. Internet is often enough for general SaaS, and cellular fits rapid or backup sites."
+      },
+      {
+        "q": "Cloud onRamp for SaaS at a remote site improves Office 365 or Webex by doing what?",
+        "choices": [
+          "Disabling TLS so the path looks faster",
+          "Backhauling all SaaS through the data center by policy",
+          "Probing application quality out of each local Internet exit and steering to the better path",
+          "Pinning every application to LTE"
+        ],
+        "answer": 2,
+        "why": "The DIA onRamp example probes selected SaaS applications on each local exit and uses the better-performing circuit."
+      },
+      {
+        "q": "On-box SD-WAN security called out in the module includes which set?",
+        "choices": [
+          "URL filtering, Cisco Umbrella, and Advanced Malware Protection with file reputation",
+          "Only spanning tree",
+          "Only static host routes",
+          "Only wireless rogue detection"
+        ],
+        "answer": 0,
+        "why": "The on-box security slide lists URL categories and reputation, Umbrella, and AMP with reputation and sandboxing."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "day": "Day 2 · WAN",
+    "title": "SD-Routing and Segment Routing",
+    "questions": [
+      {
+        "q": "Which component is present in a Catalyst SD-WAN deployment and absent from SD-Routing?",
+        "choices": [
+          "The SD-WAN Manager",
+          "The SD-WAN Validator",
+          "The SD-WAN Controller",
+          "The WAN edge hardware"
+        ],
+        "answer": 2,
+        "why": "The architecture comparison shows Manager and Validator in both, and states that the SD-WAN Controller is not included for SD-Routing."
+      },
+      {
+        "q": "SD-Routing is aimed at which customer?",
+        "choices": [
+          "A customer who wants to keep DMVPN, FlexVPN, GETVPN, or MPLS VPN and add centralized management",
+          "A customer replacing the campus with BGP-EVPN",
+          "A customer who only needs OpenRoaming",
+          "A customer who already needs a full SD-WAN overlay and application-aware steering"
+        ],
+        "answer": 0,
+        "why": "SD-Routing keeps classic routed VPNs and adds Manager-based operations without forcing an SD-WAN migration."
+      },
+      {
+        "q": "A customer already on SD-WAN wants the same operational model for remaining Internet-edge routers. What does the customer-journey answer recommend?",
+        "choices": [
+          "Rip out SD-WAN and return to static tunnels",
+          "Keep SD-WAN and bring the remaining devices under the same centralized management",
+          "Disable certificates on the validator",
+          "Move those routers to GEO satellite only"
+        ],
+        "answer": 1,
+        "why": "Customer A stays on SD-WAN and extends the same management to devices that are not yet in the fabric."
+      },
+      {
+        "q": "Segment Routing chooses a path in which way?",
+        "choices": [
+          "The destination rewrites the path at every hop",
+          "The source encodes an ordered list of segments in the packet",
+          "A SPAN port copies the packet to a controller for each hop",
+          "Every router independently floods a full traffic-engineering database and picks the next hop with no source instruction"
+        ],
+        "answer": 1,
+        "why": "Segment Routing is source routing. Segments are instructions, such as a node or an adjacency, carried in the header."
+      },
+      {
+        "q": "A Node-SID differs from an Adj-SID because a Node-SID does what?",
+        "choices": [
+          "Identifies a router in the network, while an Adj-SID identifies a local link on that router",
+          "Encrypts the payload",
+          "Identifies a VLAN on an access port",
+          "Replaces the need for any IGP"
+        ],
+        "answer": 0,
+        "why": "Each node has a unique Node-SID. An Adj-SID has local significance for a link. Combining them steers traffic onto a specific path."
+      },
+      {
+        "q": "Topology Independent LFA in the Segment Routing section is meant to provide what?",
+        "choices": [
+          "A new public-key algorithm",
+          "About 50 ms protection for links, nodes, and shared-risk groups without waiting for full IGP convergence",
+          "Guest wireless onboarding",
+          "PoE perpetual power"
+        ],
+        "answer": 1,
+        "why": "TI-LFA is the fast-reroute mechanism described as 100 percent coverage and 50-millisecond protection."
+      },
+      {
+        "q": "SR-MPLS and SRv6 are which pair?",
+        "choices": [
+          "A firewall mode and an IPS mode",
+          "Two names for GETVPN",
+          "A wireless deployment and a satellite orbit",
+          "Two data-plane ways to carry the same Segment Routing instructions, one with MPLS labels and one with IPv6 addresses"
+        ],
+        "answer": 3,
+        "why": "The course presents one architecture with two instantiations: SID as an MPLS label, or SID as an IPv6 prefix."
+      },
+      {
+        "q": "What operational problem does Segment Routing claim to reduce in a traditional MPLS core?",
+        "choices": [
+          "The need for any redundancy",
+          "The number of protocols needed for transport, VPNs, and traffic engineering",
+          "The need for IP addressing",
+          "Encryption strength"
+        ],
+        "answer": 1,
+        "why": "The evolution slides collapse LDP, RSVP-TE, and extra control protocols into an IGP with Segment Routing extensions."
+      },
+      {
+        "q": "A brownfield customer says the MPLS WAN already works. Which problem can still justify a Segment Routing conversation?",
+        "choices": [
+          "Operational complexity, slow change, and difficult troubleshooting even though traffic is flowing",
+          "The network cannot forward IPv4",
+          "MPLS cannot isolate customers",
+          "Fiber cannot carry Ethernet"
+        ],
+        "answer": 0,
+        "why": "The activity answer says a working network can still be costly to operate, troubleshoot, and change."
+      },
+      {
+        "q": "A retailer with about 150 branches, mixed MPLS and broadband, and growing SaaS is pointed toward which WAN direction in the module wrap-up?",
+        "choices": [
+          "Manual tunnels at every branch",
+          "GETVPN with no Internet exits",
+          "A single Layer 2 domain across all countries",
+          "SD-WAN, so policy can use both transports and send cloud traffic on a better path"
+        ],
+        "answer": 3,
+        "why": "The growing-retail scenario is the SD-WAN example: many branches, mixed transports, and cloud applications."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "day": "Day 3 · Routing security",
+    "title": "Router security building blocks",
+    "questions": [
+      {
+        "q": "Why has the branch router become a larger enforcement point?",
+        "choices": [
+          "MPLS labels replaced the need for policy",
+          "All SaaS traffic is now unencrypted",
+          "Local Internet breakout bypasses the central security stack, and IoT plus encrypted traffic reduce visibility",
+          "Branch routers no longer forward packets"
+        ],
+        "answer": 2,
+        "why": "Direct Internet, cloud access, guests, and unmanaged devices show up first at the WAN edge. The router has to segment, enforce, and export telemetry."
+      },
+      {
+        "q": "Cisco Secure Boot checks the boot chain using which hardware root?",
+        "choices": [
+          "A public DNS resolver",
+          "An MPLS P router",
+          "The wireless LAN controller",
+          "The Trust Anchor module"
+        ],
+        "answer": 3,
+        "why": "The secure-boot sequence starts at the Trust Anchor, which checks the microloader, bootloader, and operating system before the image is trusted."
+      },
+      {
+        "q": "Zone-based firewall policy on a router is applied between what?",
+        "choices": [
+          "Individual Wi-Fi resource units",
+          "StackWise cables",
+          "MPLS traffic-engineering tunnels only",
+          "Security zones, using class maps to match traffic and policy maps to pass, inspect, or drop it"
+        ],
+        "answer": 3,
+        "why": "The operation slide is class-map, policy-map, then zone-pair. Zones are applied to interfaces."
+      },
+      {
+        "q": "Enterprise firewall with application awareness adds which recognition to ZBFW?",
+        "choices": [
+          "A new spanning-tree mode",
+          "NBAR recognition of more than 1,500 Layer 7 applications",
+          "LEO satellite tracking",
+          "UWB time-of-flight"
+        ],
+        "answer": 1,
+        "why": "NBAR lets the router allow or block by application, category, family, or group rather than only ports."
+      },
+      {
+        "q": "The router next-generation firewall in this module combines application-aware ZBFW with which engine?",
+        "choices": [
+          "Unified Threat Defense, including IPS, malware protection, and URL filtering",
+          "A private VLAN",
+          "LISP mapping only",
+          "OFDM only"
+        ],
+        "answer": 0,
+        "why": "UTD adds Snort IPS, AMP, URL filtering, TLS decryption, and identity-aware policy."
+      },
+      {
+        "q": "Snort signature sets on the router are described as which three postures?",
+        "choices": [
+          "Hub, spoke, and mesh",
+          "2.4, 5, and 6 GHz",
+          "Open, closed, and monitor for 802.1X",
+          "Connectivity over security, balanced, and security over connectivity"
+        ],
+        "answer": 3,
+        "why": "Those three signature-set levels trade inspection depth against connectivity. Talos updates can be pushed by the SD-WAN Manager."
+      },
+      {
+        "q": "A URL reputation score of 90 is classified as what?",
+        "choices": [
+          "High risk",
+          "Trustworthy",
+          "Suspicious",
+          "Moderate risk"
+        ],
+        "answer": 1,
+        "why": "The BrightCloud scale is 1–20 high risk, 21–40 suspicious, 41–60 moderate, 61–80 low risk, and 81–100 trustworthy."
+      },
+      {
+        "q": "Why does the TLS proxy discussion matter on a branch router?",
+        "choices": [
+          "TLS removed the need for any firewall",
+          "Certificates replace zones",
+          "More than 90 percent of Internet traffic is encrypted, so inspection needs a controlled decrypt and has a performance cost",
+          "Decryption makes the router faster in every case"
+        ],
+        "answer": 2,
+        "why": "The slide says malware hides in encrypted traffic and selective decryption is the practical compromise."
+      },
+      {
+        "q": "Advanced malware protection on the router is described as using which functions?",
+        "choices": [
+          "Only channel bonding",
+          "Only a static ACL",
+          "Only MAC authentication bypass",
+          "File reputation, retrospection, and analysis through Cisco Malware Analytics"
+        ],
+        "answer": 3,
+        "why": "AMP covers reputation and retrospection, with Threat Grid analysis, on protocols such as HTTP and SMTP when decryption is available."
+      },
+      {
+        "q": "WAN MACsec is positioned for which outcome?",
+        "choices": [
+          "Line-rate Layer 2 encryption over public Ethernet transport, including multipoint topologies",
+          "Replacing 802.1X on access ports",
+          "Guest captive portal",
+          "Per-application SaaS steering"
+        ],
+        "answer": 0,
+        "why": "WAN MACsec extends 802.1AE across carrier Ethernet for high-speed links such as data-center interconnect, at line rate."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "day": "Day 3 · Routing security",
+    "title": "Cloud security services",
+    "questions": [
+      {
+        "q": "Security Service Edge is best described as what?",
+        "choices": [
+          "An MPLS label-distribution protocol",
+          "Cloud-delivered security for web, cloud services, and private applications",
+          "A Wi-Fi site survey",
+          "A campus stacking protocol"
+        ],
+        "answer": 1,
+        "why": "SSE is delivered primarily from the cloud and typically includes secure web gateway, CASB, and zero trust network access functions."
+      },
+      {
+        "q": "A cloud-delivered firewall, or firewall-as-a-service, adds which coverage beyond a secure web gateway?",
+        "choices": [
+          "Only wireless rogue containment",
+          "Only HTTP category filtering",
+          "Only badge-reader onboarding",
+          "Layer 3 and 4 controls and non-web Internet access, plus IPS and application control"
+        ],
+        "answer": 3,
+        "why": "The CDFW picture shows ports 80 and 443 on the secure web gateway and non-web traffic handled by the cloud firewall."
+      },
+      {
+        "q": "Which functions does the course list for a secure web gateway?",
+        "choices": [
+          "MPLS traffic engineering",
+          "StackWise Virtual dual-active detection",
+          "PON split ratios",
+          "URL filtering, reputation, TLS inspection, malware sandboxing, and remote browser isolation"
+        ],
+        "answer": 3,
+        "why": "The SWG slide stacks those web-security controls in the cloud proxy path."
+      },
+      {
+        "q": "Why is full SSL decryption called out as an operational concern?",
+        "choices": [
+          "It replaces identity",
+          "It is required on every packet or the proxy fails closed with no alternative",
+          "It removes malware with no performance cost",
+          "It is resource intensive, so it should be applied selectively"
+        ],
+        "answer": 3,
+        "why": "The SWG performance slide says decryption is expensive. The router TLS discussion makes the same point about selective decryption."
+      },
+      {
+        "q": "A CASB tenant control is used to do what?",
+        "choices": [
+          "Build spoke-to-spoke GRE tunnels",
+          "Select a Node-SID",
+          "Allow the corporate Microsoft 365 instance and block personal instances",
+          "Assign PoE budgets"
+        ],
+        "answer": 2,
+        "why": "The example distinguishes the corporate tenant from personal tenants and can limit the choice to groups of users."
+      },
+      {
+        "q": "CASB discovery of third-party apps is aimed at which problem?",
+        "choices": [
+          "Hidden-node collisions on Wi-Fi",
+          "Supervisor failover",
+          "OAuth grants that let unreviewed extensions into the Microsoft 365 tenant",
+          "Overlapping MPLS labels"
+        ],
+        "answer": 2,
+        "why": "The slide covers visibility into third-party applications and plug-ins granted access through OAuth."
+      },
+      {
+        "q": "Zero Trust Network Access replaces a full-tunnel VPN with what?",
+        "choices": [
+          "Unrestricted access to the whole private network",
+          "A Layer 2 broadcast domain for remote users",
+          "A shared pre-shared key for every application",
+          "Per-application access after the user, device, and context are checked"
+        ],
+        "answer": 3,
+        "why": "ZTNA verifies identity and context, then opens only the approved application. It can be client-based or clientless."
+      },
+      {
+        "q": "Why is DNS-layer security described as an early control?",
+        "choices": [
+          "DNS only works for data-center servers",
+          "DNS replaces TLS",
+          "DNS is the first step for almost every Internet connection, before the file runs or the IP session starts",
+          "DNS cannot be answered with a block page"
+        ],
+        "answer": 2,
+        "why": "The slide says a safe request returns the real address and a malicious request can return a block page."
+      },
+      {
+        "q": "How do the two DLP deployment methods differ?",
+        "choices": [
+          "API DLP blocks non-web traffic at Layer 4",
+          "Real-time DLP inspects web traffic in the secure web gateway; API DLP inspects sanctioned SaaS through cloud APIs",
+          "Both methods only scan tape backups",
+          "Real-time DLP cannot see unsanctioned applications"
+        ],
+        "answer": 1,
+        "why": "Inline SWG DLP covers sanctioned and unsanctioned web use. API DLP is for data already in the cloud application."
+      },
+      {
+        "q": "Remote browser isolation protects the endpoint by doing what?",
+        "choices": [
+          "Disabling all Internet access",
+          "Running the web session in a cloud browser and streaming a rendered result so active content does not execute locally",
+          "Replacing 802.1X",
+          "Caching every file on the laptop"
+        ],
+        "answer": 1,
+        "why": "RBI is for risky or unknown sites. The user sees rendered content instead of running the site’s code."
+      }
+    ]
+  }
+]

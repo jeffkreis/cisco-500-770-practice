@@ -1,0 +1,587 @@
+[
+  {
+    "id": 11,
+    "day": "Day 3 · Routing security",
+    "title": "Where WAN security sits",
+    "questions": [
+      {
+        "q": "Why does the course say an account team should be ready to discuss more than one WAN security architecture?",
+        "choices": [
+          "Every enterprise still sends all traffic only between the branch and headquarters, so one firewall model covers every account",
+          "Colocation, direct Internet access, and SASE are three names for the same backhaul design",
+          "Internet, SaaS, and cloud access changed where traffic goes, so security may sit centrally, at the branch, or in the cloud, and the choice balances security, performance, cost, and operations",
+          "The architectures differ only by which Wi-Fi band the branch uses"
+        ],
+        "answer": 2,
+        "why": "The module says traffic no longer flows only between branch and headquarters, and each architecture has its own tradeoffs."
+      },
+      {
+        "q": "In the centralized firewall architecture, where is most branch traffic inspected?",
+        "choices": [
+          "At a central site, after the branch sends it back, and before it goes to the Internet or to shared resources",
+          "On the guest SSID of the local access point",
+          "On every branch firewall, with no traffic returning to headquarters",
+          "Only at a cloud point of presence, with no data-center stack"
+        ],
+        "answer": 0,
+        "why": "The picture sends branch traffic, and usually remote-user VPN, to a central firewall stack. The branch edge can stay relatively simple."
+      },
+      {
+        "q": "Which customer is the best fit for a centralized firewall, as the course describes that fit?",
+        "choices": [
+          "A 150-store retailer whose traffic is mostly Microsoft 365 and Salesforce",
+          "A regulated organization whose important applications still live in the data center and that values consistent control more than local SaaS performance",
+          "A branch that must inspect Internet traffic locally while the hub is unreachable",
+          "A design whose only goal is the lowest latency to the nearest SaaS front door"
+        ],
+        "answer": 1,
+        "why": "The best-fit slide names financial or highly regulated organizations, data-center-hosted applications, and customers early in a move to cloud services."
+      },
+      {
+        "q": "Which drawback belongs to the centralized firewall model?",
+        "choices": [
+          "Each branch must size and patch its own next-generation firewall",
+          "Policy is different at every site because there is no shared stack",
+          "Backhaul adds latency, consumes WAN bandwidth, and scales poorly as Internet and SaaS traffic grow",
+          "Remote users can reach private applications only through clientless ZTNA"
+        ],
+        "answer": 2,
+        "why": "Drawbacks include latency, a poorer SaaS experience, bandwidth use, hub dependency, and remote-user protection only with an always-on full tunnel."
+      },
+      {
+        "q": "A security stack in colocation is best described as what?",
+        "choices": [
+          "Tunnel-less group encryption that preserves the original IP header",
+          "Identity-based micro-segmentation inside a single VLAN",
+          "A regional or shared inspection hub in an external facility, closer to branches and cloud than a distant headquarters, which can also terminate remote-user VPNs",
+          "Local Internet breakout with no shared inspection point"
+        ],
+        "answer": 2,
+        "why": "Colocation hosts the security services as an external hub. Large organizations use several regional hubs between branch, cloud, Internet, and private applications."
+      },
+      {
+        "q": "Compared with hauling all traffic to a distant data center, what benefit does the course give a colocation security stack?",
+        "choices": [
+          "Removal of every on-premises tool and of any dependency on the colocation or transport provider",
+          "Better performance than long-distance backhaul, plus geographic scale for hybrid inspection",
+          "Automatic replacement of the private WAN by ZTNA",
+          "The same user experience as direct Internet access, with no traffic detour"
+        ],
+        "answer": 1,
+        "why": "Colocation is still a detour compared with DIA, but it is closer than a far headquarters and can improve resiliency by spreading hubs."
+      },
+      {
+        "q": "How does the course define direct Internet access?",
+        "choices": [
+          "A replacement for 802.1X on the access port",
+          "A wireless mesh backhaul between buildings",
+          "A requirement that every flow be inspected on one central firewall",
+          "A breakout model in which selected Internet-bound branch traffic leaves locally. It is not a complete security architecture by itself"
+        ],
+        "answer": 3,
+        "why": "DIA improves the path for SaaS and web traffic. The course says it is commonly paired with branch security, cloud security, or both, and is tied to SD-WAN."
+      },
+      {
+        "q": "Which security pairing does the course expect when a branch uses direct Internet access?",
+        "choices": [
+          "A private VLAN on the campus core and nothing at the branch",
+          "No inspection, because SaaS traffic is already encrypted",
+          "GETVPN with no Internet exit",
+          "Local branch security, cloud-delivered security, or both"
+        ],
+        "answer": 3,
+        "why": "Once traffic bypasses the central stack, new controls have to cover it. DIA alone does not decide policy, visibility, or compliance."
+      },
+      {
+        "q": "Which outcome is a stated benefit of direct Internet access?",
+        "choices": [
+          "One security stack and no new controls at the branch or in the cloud",
+          "Removal of any need to choose which applications break out",
+          "Lower latency and a better experience for cloud applications, with less traffic hauled to the data center",
+          "The same visibility as a design in which every flow passes the central firewall"
+        ],
+        "answer": 2,
+        "why": "Benefits are latency, user experience for applications such as Office 365, less backhaul, lower WAN cost, and a model that scales for cloud-first traffic."
+      },
+      {
+        "q": "Which design question belongs in a direct Internet access conversation?",
+        "choices": [
+          "Which Security Group Tag to assign a printer",
+          "Which traffic should break out, what must be inspected before it does, and whether cloud or branch security is already in place",
+          "How many non-overlapping channels the warehouse has in 2.4 GHz",
+          "Whether the campus core should run StackWise Virtual"
+        ],
+        "answer": 1,
+        "why": "The fit slide asks which traffic and which users break out locally, what security happens first, and whether the customer can support that breakout."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "day": "Day 3 · Routing security",
+    "title": "SSE, SASE, and ZTNA",
+    "questions": [
+      {
+        "q": "What does the course mean by firewalls everywhere?",
+        "choices": [
+          "Each branch has local firewalling, so traffic can be inspected at the site before it goes to the Internet, the cloud, or the WAN",
+          "Only the data center has a firewall, and every branch stays a simple router",
+          "Security exists only as a cloud web proxy, with no branch policy",
+          "Guest and corporate users share one VLAN and one access list"
+        ],
+        "answer": 0,
+        "why": "Enforcement is distributed. Some traffic may still go to a central site, and remote-user VPNs often terminate at a regional site."
+      },
+      {
+        "q": "Which drawback matches a firewalls-everywhere design that is not centrally managed?",
+        "choices": [
+          "A single laptop becomes the only path for every remote user",
+          "The design cannot segment users inside a branch",
+          "SaaS performance is always worse than full backhaul to headquarters",
+          "Cost and operational load rise, because many sites need consistent policy, signature updates, correct sizing, and correlated logs"
+        ],
+        "answer": 3,
+        "why": "The challenges slide lists policy consistency, software and signature lifecycle, many enforcement points, edge sizing, and log collection."
+      },
+      {
+        "q": "A retailer with 150 branches, heavy Office 365 use, limited branch IT, guest Wi-Fi, and payment traffic wants consistent policy without hauling SaaS to the data center. Which example solution matches the course?",
+        "choices": [
+          "Use autonomous access points and no firewall",
+          "Backhaul every SaaS session through the data center and do not use direct Internet access",
+          "Use SD-WAN with cloud-delivered SSE or SASE, and send Internet and SaaS from the branch to cloud security",
+          "Replace the WAN with clientless ZTNA and no site-to-site connectivity"
+        ],
+        "answer": 2,
+        "why": "The retail example keeps local breakout and puts consistent web and SaaS controls in cloud-delivered security. Payment, guest, and IoT needs can still justify branch controls."
+      },
+      {
+        "q": "A regulated firm keeps sensitive applications in the data center, must log traffic, and will allow only limited SaaS breakout. Which example solution matches the course?",
+        "choices": [
+          "A hybrid model: keep sensitive and data-center traffic on the private WAN through the central stack, and allow limited direct Internet access only with controls",
+          "Send every flow, including core banking applications, direct to the Internet",
+          "Remove the central firewall because ZTNA replaces site connectivity",
+          "Use one shared VLAN for employees, guests, ATMs, and IoT"
+        ],
+        "answer": 0,
+        "why": "The financial example keeps centralized inspection for sensitive traffic and treats DIA as a controlled exception, with segmentation between user and device groups."
+      },
+      {
+        "q": "Which set of controls does the course place in Secure Service Edge?",
+        "choices": [
+          "StackWise, EtherChannel, and a first-hop redundancy protocol",
+          "LISP, VXLAN, and IS-IS only",
+          "WEP, TKIP, and open authentication",
+          "Secure web gateway, DNS-layer protection, CASB, data loss prevention, and ZTNA"
+        ],
+        "answer": 3,
+        "why": "SSE is the cloud-delivered stack for user-to-Internet and user-to-application controls. Remote users connect to the nearest point of presence."
+      },
+      {
+        "q": "The course writes SASE as which combination?",
+        "choices": [
+          "SSE plus SD-WAN, so cloud-delivered security and network connectivity sit in one architecture",
+          "A campus fabric made only of LISP and VXLAN",
+          "MACsec on a single Ethernet hop",
+          "ZTNA with no WAN underneath it"
+        ],
+        "answer": 0,
+        "why": "The slide states SASE equals SSE plus SD-WAN. It is a larger transformation than adding SSE alone, and it needs network and security teams aligned."
+      },
+      {
+        "q": "A retail customer uses MPLS for branch-to-branch traffic and data-center access, and wants ZTNA so they can drop MPLS. What should you explain?",
+        "choices": [
+          "ZTNA replaces MPLS when a client is installed on every branch router",
+          "Clientless ZTNA builds a full site-to-site fabric",
+          "ZTNA can improve secure user access to applications, but it does not replace the branch-to-branch WAN connectivity MPLS provides",
+          "ZTNA steers branch traffic by adding a second identity provider to the MPLS network"
+        ],
+        "answer": 2,
+        "why": "This is the module review item. ZTNA is application access for users. It is not a site-to-site WAN, and it may coexist with VPN during a migration."
+      },
+      {
+        "q": "Which set should you highlight as core Secure Web Gateway functions?",
+        "choices": [
+          "Site-to-site VPN tunnels and 802.1X port authentication",
+          "Automated server patching, internal database administration, and endpoint hardware monitoring",
+          "PoE budgeting and Wi-Fi channel bonding",
+          "URL category and reputation filtering, TLS inspection, and sandbox analysis of unknown files"
+        ],
+        "answer": 3,
+        "why": "The review item’s correct functions are sandboxing, URL category and domain reputation, and SSL/TLS inspection. The other choices are outside the secure web gateway."
+      },
+      {
+        "q": "Employees have allowed third-party productivity tools into the company’s Microsoft 365 tenant. Which CASB response matches the review?",
+        "choices": [
+          "Discover and catalog those app permissions, classify them by risk and permission scope, and revoke unapproved or high-risk permissions",
+          "Reset every user password and move all business data back to an on-premises server",
+          "Add a second MPLS provider so OAuth grants are encrypted",
+          "Limit bandwidth for external cloud tools and turn on multifactor authentication only for internal web servers"
+        ],
+        "answer": 0,
+        "why": "The review answer is discovery, risk classification, and revocation of risky app permissions. Password resets and a full return to on-premises storage are not the CASB actions named."
+      },
+      {
+        "q": "Which three ideas describe firewalls everywhere when it is compared with a centralized firewall?",
+        "choices": [
+          "Every flow must pass a central facility, operations are always simpler, and one enforcement point covers all locations",
+          "The model is meant only for a handful of branches, and policy cannot be centralized",
+          "Enforcement is closer to users and devices, Internet traffic can exit locally, and inspection is distributed across branches",
+          "It removes the need for any branch platform sizing or log collection"
+        ],
+        "answer": 2,
+        "why": "The review item’s correct traits are local enforcement, local Internet exit, and distributed firewalls. It does not claim simpler operations or a single central choke point."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "day": "Day 4 · Secure campus",
+    "title": "Campus design and availability",
+    "questions": [
+      {
+        "q": "How does the course define a campus?",
+        "choices": [
+          "One or more buildings and the surrounding grounds, where people and their devices need wired and wireless access to each other and to other domains",
+          "Any set of branches connected by MPLS, regardless of distance",
+          "Only the data-center cage that hosts the core routers",
+          "A single access point and its basic service area"
+        ],
+        "answer": 0,
+        "why": "The campus discussion is about user and device access in a similar geographic area, including wired, wireless, security, and management."
+      },
+      {
+        "q": "The campus multi-layer model always has which logical layers, even when a device collapses more than one of them?",
+        "choices": [
+          "Supplicant, authenticator, and authentication server",
+          "Underlay, overlay, and fusion only",
+          "Access, distribution, and core",
+          "Spine, leaf, and route reflector only"
+        ],
+        "answer": 2,
+        "why": "Each logical layer has its own job. If you collapse layers, that device has to perform every function of the layers it combines."
+      },
+      {
+        "q": "Which description matches the campus access layer in the course?",
+        "choices": [
+          "It terminates every VLAN on a firewall and never powers an endpoint",
+          "It connects users and devices, is often Layer 2, and is where PoE, 802.1X, and port features such as PortFast and BPDU Guard are common",
+          "It builds VXLAN tunnels between spines",
+          "It is a pure Layer 3 core whose only job is BGP transit with almost no features"
+        ],
+        "answer": 1,
+        "why": "Access is the wiring closet. Distribution connects access to the core and is commonly Layer 2 toward access and Layer 3 toward the core. The core aims for simple, high-bandwidth Layer 3 transport."
+      },
+      {
+        "q": "What do Perpetual PoE and Fast PoE do on a campus switch?",
+        "choices": [
+          "Perpetual PoE keeps powered devices up during a software reload, and Fast PoE supplies power at boot before the full operating system is up",
+          "They encrypt the access port with MACsec",
+          "They bond 2.4 GHz and 6 GHz into one channel",
+          "They replace CDP and LLDP for neighbor discovery"
+        ],
+        "answer": 0,
+        "why": "Phones, access points, cameras, and lighting depend on the switch. The course also describes 2-event classification, which can deliver PoE+ power before CDP or LLDP exchanges the power level."
+      },
+      {
+        "q": "The course associates UPOE+ and IEEE 802.3bt with about how much power on an access port?",
+        "choices": [
+          "30 watts, which is PoE+",
+          "15 watts, which is the original PoE level",
+          "4 watts, which is a USB accessory budget",
+          "90 watts"
+        ],
+        "answer": 3,
+        "why": "The access-port timeline shows 15 W PoE, 30 W PoE+, 60 W UPOE, and 90 W UPOE+, and it ties the high end to 802.3bt for devices such as lighting and thin clients."
+      },
+      {
+        "q": "Which platform tradeoff matches the course comparison of modular and fixed switches?",
+        "choices": [
+          "Modular platforms are preferred only for one-access-point offices",
+          "Both types are identical except for the paint color",
+          "Modular platforms add flexibility, port density, and redundant processors, with a larger footprint and more complexity. Fixed platforms are simpler and smaller, with a single processor",
+          "Fixed platforms always have redundant supervisors and a longer lifecycle than modular chassis"
+        ],
+        "answer": 2,
+        "why": "The slide lists modular pros as flexibility, lifecycle, density, power, and redundant processors, and fixed pros as simplicity, higher MTBF, smaller size, and lower cost."
+      },
+      {
+        "q": "Which speed story does the course tell for a modern campus?",
+        "choices": [
+          "Access stays at 10 megabit because Wi-Fi does not affect the wired uplink",
+          "Multigigabit access, driven by Wi-Fi and video, pushes distribution and core toward 25, 100, and 400 Gigabit uplinks, with typical ratios up to 20:1 from access to distribution and 4:1 from distribution to core",
+          "The core should be slower than the access port so the network naturally polices traffic",
+          "PoE wattage determines the routing protocol"
+        ],
+        "answer": 1,
+        "why": "The trend slide cites Wi-Fi 6, 6E, and 7, private 5G, video, smart-building IoT, and 90 W PoE as the pressure toward faster access and much faster uplinks."
+      },
+      {
+        "q": "How does the course want you to talk about availability?",
+        "choices": [
+          "Availability is only the mean time between failures, so repair time does not matter",
+          "Raise mean time between failures and lower mean time to repair. Five nines is about five minutes of downtime a year. Redundancy has to exist at every layer, including during maintenance",
+          "A network that rarely fails does not need redundant links, because maintenance never causes an outage",
+          "Adding the maximum number of links is always the best high-availability design"
+        ],
+        "answer": 1,
+        "why": "The course defines MTBF and MTTR, shows single points of failure, and later says good design balances resiliency, convergence, simplicity, and the size of a failure domain. Redundancy also covers planned work."
+      },
+      {
+        "q": "Which statement matches StackWise Virtual?",
+        "choices": [
+          "Up to eight fixed access switches must sit next to each other and use dedicated stack cables",
+          "It is the wireless method that punctures a preamble around interference",
+          "Two physical switches, which may be apart, act as one logical switch over a StackWise Virtual Link, with one active control plane, both switches forwarding, and Multichassis EtherChannel",
+          "It is a routing protocol that replaces OSPF"
+        ],
+        "answer": 2,
+        "why": "StackWise Virtual targets distribution and core on Catalyst 9400, 9500, and 9600. A separate dual-active detection link is recommended. It is meant to retire spanning tree and first-hop redundancy at that layer."
+      },
+      {
+        "q": "Which pair of upgrade features does the course credit with little or no traffic loss, and where does each apply?",
+        "choices": [
+          "StackWise membership alone, with no separate upgrade feature",
+          "Graceful Insertion and Removal, and a cold software-maintenance reload, as the two hitless methods",
+          "ISSU on switches with redundant supervisors or StackWise Virtual, and extended Fast Software Upgrade on fixed switches and stacks",
+          "StackPower and a larger PoE budget"
+        ],
+        "answer": 2,
+        "why": "The review item’s hitless or low-impact software updates are ISSU and xFSU. ISSU is described with a short switchover, often under 200 milliseconds. xFSU aims for under a second of data-plane downtime on fixed platforms. A cold SMU still needs a reload."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "day": "Day 4 · Secure campus",
+    "title": "VLANs, VRFs, and access control",
+    "questions": [
+      {
+        "q": "How does the course separate macro-segmentation from micro-segmentation?",
+        "choices": [
+          "They are two names for a private VLAN",
+          "Macro-segmentation is a Security Group Tag, and micro-segmentation is a VLAN",
+          "Macro-segmentation separates major groups such as employees, guests, and IoT. Micro-segmentation restricts device-to-device or user-to-application traffic inside that design",
+          "Macro-segmentation applies only to Wi-Fi, and micro-segmentation applies only to fiber"
+        ],
+        "answer": 2,
+        "why": "Macro tools named in the deck are VLANs, VRFs, and firewall zones. Micro tools combine 802.1X, downloadable ACLs, Security Group Tags, VLANs, and VRFs."
+      },
+      {
+        "q": "Which statement about VLANs matches the course?",
+        "choices": [
+          "A VLAN verifies the identity of whoever plugs into the port",
+          "Devices in different VLANs can talk at Layer 2 without a router",
+          "VLANs prevent every lateral movement inside the same VLAN",
+          "A VLAN is its own Layer 2 broadcast domain. Devices in different VLANs need a Layer 3 device before they can communicate, and that path is where policy can be applied"
+        ],
+        "answer": 3,
+        "why": "The solution slide says VLANs group users and services, cut extra broadcasts, and create policy boundaries. They do not, by themselves, stop movement inside one VLAN."
+      },
+      {
+        "q": "Which limitation does the course assign to VLAN segmentation?",
+        "choices": [
+          "It is often static and tied to a port or location, so a move can require a network change, and policy follows the subnet rather than the person",
+          "It logs every denied frame and can be extended across a campus with no design cost",
+          "It assigns a Security Group Tag that follows the user onto the WAN",
+          "It creates a separate routing table for every user"
+        ],
+        "answer": 0,
+        "why": "The limitations slide also warns about VLAN sprawl. Private VLANs add isolation inside one subnet, but they are hard to extend, drop silently, and stay at Layer 2."
+      },
+      {
+        "q": "Why does the course say Layer 2 segmentation is not enough once traffic is routed?",
+        "choices": [
+          "A trunk blocks every inter-VLAN packet",
+          "Routing automatically creates a VRF for every VLAN",
+          "Different VLANs can still land in the same routing table, so a large ACL at the first Layer 3 device becomes the only control and a mistake can expose one group to another",
+          "Layer 3 switches cannot carry ACLs"
+        ],
+        "answer": 2,
+        "why": "The slide shows guest, IoT, and corporate VLANs separated at Layer 2 and then routed together. Sensitive groups may need a stronger boundary."
+      },
+      {
+        "q": "What does a VRF add beyond VLANs?",
+        "choices": [
+          "A new Wi-Fi channel for each department",
+          "Encryption of the Ethernet frame on one hop",
+          "Automatic user identity and micro-segmentation with no other product",
+          "A separate routing table, so groups stay apart at Layer 3 and can even reuse the same addresses. They meet only through a firewall or deliberate route leaking"
+        ],
+        "answer": 3,
+        "why": "VRF benefits are stronger separation, overlap of addresses, and scale beyond VLANs. The course also says a VRF does not identify a user or device and is not micro-segmentation by itself."
+      },
+      {
+        "q": "In the meeting-room story, a visitor unplugs a room navigator and uses that port. What is the expected lesson?",
+        "choices": [
+          "VLANs and VRFs do not notice that a different device connected. The port needs authentication and authorization before it grants trusted access",
+          "A visitor laptop is safe because it joined the navigator’s subnet",
+          "The VLAN changes itself when the MAC address changes",
+          "VRFs identify the visitor by certificate without any access-control platform"
+        ],
+        "answer": 0,
+        "why": "The solution says unknown devices should not inherit a trusted port, and static configuration fails when someone swaps the plugged-in device."
+      },
+      {
+        "q": "After 802.1X authentication succeeds, which question does authorization answer?",
+        "choices": [
+          "Which antenna the access point should use",
+          "Which MPLS label the core should push",
+          "What access this user or device should receive, such as a VLAN, a downloadable ACL, a redirect, quarantine, a permit, or a deny",
+          "Whether the switch stack cable is seated"
+        ],
+        "answer": 2,
+        "why": "Authentication asks who or what is connecting. The authentication server returns the policy, and the switch enforces it."
+      },
+      {
+        "q": "How should you position MAC Authentication Bypass?",
+        "choices": [
+          "A Layer 3 routing protocol",
+          "The preferred method for every laptop that can run 802.1X",
+          "A fallback that lets printers, cameras, phones, and many IoT devices on board by MAC address. It is weaker than a certificate because a MAC can be spoofed",
+          "Encryption for an open guest network"
+        ],
+        "answer": 2,
+        "why": "The course prefers 802.1X for capable devices and treats MAB as the common method for devices with no supplicant. It should be backed by profiling and policy."
+      },
+      {
+        "q": "Which 802.1X deployment mode refuses access until authentication succeeds?",
+        "choices": [
+          "Monitor mode that still forwards all user traffic with no change",
+          "Open mode",
+          "Low-impact mode",
+          "Closed mode"
+        ],
+        "answer": 3,
+        "why": "Closed mode is the strongest control and can disrupt a network that is not ready. Open mode allows access before enforcement for visibility. Low-impact mode starts with limited access and tightens it after the policy decision."
+      },
+      {
+        "q": "Why does the course introduce a central platform such as Cisco ISE instead of configuring every port by hand?",
+        "choices": [
+          "ISE replaces the need for any switch or access point",
+          "Guests, employees, phones, printers, IoT, and contractors need different access, and the same decision should apply on wired, wireless, and VPN",
+          "Profiling works only when no identity source is connected",
+          "Each closet should keep a unique local policy so users get different rights on each floor"
+        ],
+        "answer": 1,
+        "why": "ISE is the example policy point: it ties authentication to authorization, profiles devices, checks posture, and can return a VLAN, downloadable ACL, Security Group Tag, redirect, or deny."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "day": "Day 4 · Secure campus",
+    "title": "TrustSec and scalable policy",
+    "questions": [
+      {
+        "q": "Cisco TrustSec changes policy from IP-to-IP rules into what?",
+        "choices": [
+          "A separate VRF for every laptop",
+          "Channel bonding between access points",
+          "One VLAN per person, extended across the campus",
+          "Group-to-group rules, using a Security Group Tag for the role and a Security Group ACL between tags"
+        ],
+        "answer": 3,
+        "why": "A Security Group Tag is a number for a role, such as employee, guest, or printer. ISE assigns it after 802.1X or MAB, and the access switch tags that endpoint’s traffic."
+      },
+      {
+        "q": "Which sequence matches how TrustSec works in the course?",
+        "choices": [
+          "The core assigns a VLAN, then the access switch ignores identity",
+          "SXP encrypts the payload before ISE is contacted",
+          "The endpoint chooses its own tag and the firewall trusts it",
+          "The device authenticates, ISE assigns a Security Group Tag, the tag travels with the traffic, and a TrustSec device enforces the Security Group ACL"
+        ],
+        "answer": 3,
+        "why": "The flow slide is authentication, policy evaluation, tag assignment, tag on the traffic, then enforcement. The enforcing device must know the source tag, destination tag, and the policy between them."
+      },
+      {
+        "q": "When is inline Security Group Tagging the course’s preferred propagation method?",
+        "choices": [
+          "When the customer refuses to use ISE",
+          "When the path can carry the tag inside the Ethernet frame from end to end",
+          "When the only goal is a static map from a subnet to a tag on one data-center switch",
+          "When no switch on the path understands TrustSec, so the tag must be looked up from an IP address"
+        ],
+        "answer": 1,
+        "why": "Inline tagging inserts the SGT in the frame. SXP is the alternative that shares IP-to-SGT mappings when devices cannot carry the tag. Local maps from subnet, VLAN, or interface are a third method."
+      },
+      {
+        "q": "What is the Security Group Tag Exchange Protocol used for?",
+        "choices": [
+          "Electing a spanning-tree root",
+          "Sharing IP-to-SGT mappings with devices that cannot carry the tag in the frame. ISE can be the central place those mappings come from",
+          "Roaming a Wi-Fi client between controllers",
+          "Encrypting WAN Ethernet at line rate"
+        ],
+        "answer": 1,
+        "why": "SXP lets an enforcement device learn which address belongs to which tag. The course also shows ISE pushing the binding toward a data-center switch."
+      },
+      {
+        "q": "Why can TrustSec stay smaller than classic ACLs as groups grow?",
+        "choices": [
+          "Each new server still needs its own permit line for every user address",
+          "TrustSec works only for IPv4, so the IPv6 table stays unmanaged",
+          "A Security Group ACL is written between roles, so the same statements cover many addresses. The course example contrasts dozens of group rules with tens of thousands of IP ACL lines",
+          "Tags are meaningful only inside one wiring closet"
+        ],
+        "answer": 2,
+        "why": "One worked example grows four sources and six destinations into 96 ACL entries. The group example contrasts 48 Security Group ACL statements with 48,000 traditional entries."
+      },
+      {
+        "q": "Which benefit does the course claim for TrustSec policy?",
+        "choices": [
+          "It replaces authentication, so 802.1X can be removed",
+          "It is written in business language, follows the user or device instead of the IP address, and can be enforced on wired, wireless, VPN, and firewall devices",
+          "It requires a new VLAN every time a person changes floors",
+          "It is limited to about ten devices in one private VLAN"
+        ],
+        "answer": 1,
+        "why": "The benefits slide also cites less ACL sprawl and scale for both IPv4 and IPv6. The summary table positions TrustSec for large sites with many zones, centralized policy on ISE, and logging."
+      },
+      {
+        "q": "On the course’s segmentation menu, which tool is aimed at a handful of major domains such as guest, corporate, and IoT, including overlapping addresses?",
+        "choices": [
+          "OFDMA resource units",
+          "VRFs",
+          "Private VLANs for a few devices that only need Layer 2 isolation",
+          "A single campus-wide VLAN"
+        ],
+        "answer": 1,
+        "why": "The summary table gives VLANs a small number of zones, private VLANs a small device count inside a zone, VRFs roughly ten to fifty major domains, and TrustSec the large multi-zone case."
+      },
+      {
+        "q": "Which weakness can IoT devices create in a traditional campus, according to the module review?",
+        "choices": [
+          "They mainly create tickets about bandwidth",
+          "They always use more switch ports than the closet has",
+          "They require a new VLAN on every physical port",
+          "They may not support a security agent or standard authentication"
+        ],
+        "answer": 3,
+        "why": "The review answer is the lack of agents and of 802.1X. That is why profiling and MAB show up in the access-control story."
+      },
+      {
+        "q": "Users move often, and the organization wants the same access policy wherever they connect. Which review answer fits?",
+        "choices": [
+          "Build a separate VRF for each user",
+          "Rely only on dynamic VLAN assignment, which still ties the user to a network segment",
+          "Extend every departmental VLAN across the campus so the subnet never changes",
+          "Deploy Cisco SD-Access and use Security Group Tags so policy is based on identity"
+        ],
+        "answer": 3,
+        "why": "The review item says VLANs do not keep policy stable for mobile users. SGTs in SD-Access are the option that follows identity rather than location."
+      },
+      {
+        "q": "Traditional NAC with VLANs and downloadable ACLs still becomes hard at campus scale because of what?",
+        "choices": [
+          "The decision can be dynamic, but enforcement stays tied to places, subnets, and address-based ACLs that have to be maintained as people move",
+          "Security Group Tags cannot be used on a firewall",
+          "ISE cannot return a policy to a switch",
+          "802.1X and MAB cannot run on the same network"
+        ],
+        "answer": 0,
+        "why": "The activity solution says downloadable ACLs describe policy with IP addresses, and other devices still need their own policy. TrustSec is the course’s answer to that operational weight."
+      }
+    ]
+  }
+]

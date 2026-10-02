@@ -1,0 +1,587 @@
+[
+  {
+    "id": 1,
+    "day": "Day 1 · Security concepts",
+    "title": "Threat landscape",
+    "questions": [
+      {
+        "q": "In the ASNSP threat model, a threat is best described as which of the following?",
+        "choices": [
+          "Any event with the potential to harm an asset through destruction, disclosure, modification, or denial of service",
+          "The remaining chance of loss after patches are applied",
+          "A weakness such as a guessable password",
+          "The specific tool used to break a control"
+        ],
+        "answer": 0,
+        "why": "The deck defines a threat as a circumstance or event that can harm an asset. A weakness is a vulnerability, and the tool that uses it is an exploit."
+      },
+      {
+        "q": "Weak or easily guessed passwords are classified as what?",
+        "choices": [
+          "Vulnerabilities",
+          "Threats",
+          "Mitigations",
+          "Exploits"
+        ],
+        "answer": 0,
+        "why": "A vulnerability is a weakness that compromises the security or functionality of a system. The course uses weak passwords as the example."
+      },
+      {
+        "q": "Risk, as used in the security-concepts module, is which statement?",
+        "choices": [
+          "The act of applying a patch",
+          "A packet that fails a checksum",
+          "A signature published to detect malware",
+          "The likelihood that a threat will exploit a vulnerability and cause an undesirable consequence"
+        ],
+        "answer": 3,
+        "why": "Risk combines a threat, a specific attack, and a vulnerability, and it results in an undesirable consequence. Mitigations such as patches reduce that risk."
+      },
+      {
+        "q": "An attacker uses a SPAN port to copy traffic and steal credentials without changing the packets. Which attack type is this?",
+        "choices": [
+          "Reflection",
+          "Sniffing",
+          "Spoofing",
+          "Tampering"
+        ],
+        "answer": 1,
+        "why": "Sniffing is passive capture of frames or packets. SPAN misuse and a rogue laptop are the examples in the deck."
+      },
+      {
+        "q": "Traffic crafted to look as if it comes from another IP, MAC, or service, including a rogue DHCP server, is which attack?",
+        "choices": [
+          "Reconnaissance",
+          "Accounting",
+          "Spatial multiplexing",
+          "Spoofing"
+        ],
+        "answer": 3,
+        "why": "Spoofing hides the real sender or impersonates a trusted system. Rogue DHCP and fake email are service-spoofing examples."
+      },
+      {
+        "q": "ARP poisoning that places an attacker between two hosts so their traffic can be altered is an example of what?",
+        "choices": [
+          "A port scan",
+          "A reflection attack",
+          "A man-in-the-middle attack",
+          "Physical tapping only"
+        ],
+        "answer": 2,
+        "why": "Man-in-the-middle attacks redirect or poison network behavior. ARP poisoning and IPv6 neighbor-discovery attacks are the cited methods."
+      },
+      {
+        "q": "A command-and-control host directs many compromised systems to exhaust a victim’s bandwidth. What is that called?",
+        "choices": [
+          "A distributed denial-of-service attack",
+          "A single-source denial-of-service attack",
+          "GetVPN header preservation",
+          "MAC authentication bypass"
+        ],
+        "answer": 0,
+        "why": "DoS comes from one source. DDoS comes from many sources, often a botnet, as shown with the command-and-control picture."
+      },
+      {
+        "q": "Why does a reflection and amplification attacker spoof the victim’s address?",
+        "choices": [
+          "So DNS, NTP, or ICMP reflectors send their replies to the victim",
+          "So MACsec keys are reused on the next hop",
+          "So the victim’s router treats the flood as management traffic",
+          "So the attack stays inside one VLAN"
+        ],
+        "answer": 0,
+        "why": "The attacker forges the victim as the source. Reflectors answer that address, and small requests can produce large replies."
+      },
+      {
+        "q": "Whois lookups, DNS queries, ping sweeps, and port scans performed before a later intrusion are which activity?",
+        "choices": [
+          "Stateful inspection",
+          "Reconnaissance",
+          "Zero-touch provisioning",
+          "Accounting"
+        ],
+        "answer": 1,
+        "why": "Reconnaissance collects information so a later attack can be planned. Public records and network probing are the methods named in the module."
+      },
+      {
+        "q": "Inserting a rogue inline device, abusing console or USB access, or entering a wiring closet is classified as what?",
+        "choices": [
+          "Tampering and tapping",
+          "OFDMA",
+          "Application-aware routing",
+          "Posture assessment"
+        ],
+        "answer": 0,
+        "why": "Tampering and tapping are physical attacks on equipment and media that compromise confidentiality, integrity, or availability."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "day": "Day 1 · Security concepts",
+    "title": "Architecture and Zero Trust",
+    "questions": [
+      {
+        "q": "Confidentiality in the CIA triad means which outcome?",
+        "choices": [
+          "Information is accessible only to authorized people or systems",
+          "Every user is a local administrator",
+          "Information has not been improperly modified",
+          "Systems remain usable during an outage"
+        ],
+        "answer": 0,
+        "why": "Confidentiality prevents unauthorized access or disclosure. Integrity protects accuracy, and availability keeps services usable."
+      },
+      {
+        "q": "Which statement matches integrity?",
+        "choices": [
+          "Data and systems stay accurate and are not improperly modified",
+          "The WAN is a full mesh",
+          "Users authenticate only once per day",
+          "Traffic is always encrypted with MACsec"
+        ],
+        "answer": 0,
+        "why": "Integrity safeguards accuracy and prevents adverse modification. Encryption is one control, not the definition of integrity."
+      },
+      {
+        "q": "Defense in depth, as drawn in the module, means what?",
+        "choices": [
+          "Guest and corporate users share one VLAN",
+          "One firewall at the Internet edge is enough",
+          "Endpoint, data, and network layers each add protection so a single miss does not expose everything",
+          "Encryption replaces identity checks"
+        ],
+        "answer": 2,
+        "why": "The course shows layered controls: endpoints, encrypted data at rest and in transit, and network security."
+      },
+      {
+        "q": "Which summary matches the Zero Trust access picture on the switch?",
+        "choices": [
+          "Verify explicitly, use least privilege, and assume breach, with continuous checks",
+          "Grant full access if 802.1X fails so work continues",
+          "Trust the port, then review access weekly",
+          "Share one admin password and skip logs"
+        ],
+        "answer": 0,
+        "why": "The slide sequence is verify explicitly, least privilege, and assume breach, plus continuous monitoring."
+      },
+      {
+        "q": "Threat modeling in the architecture section is a systematic way to do what?",
+        "choices": [
+          "Choose a satellite orbit",
+          "Identify critical assets, evaluate threats and vulnerabilities, and plan mitigations",
+          "Size a PoE budget",
+          "Replace routing with spanning tree"
+        ],
+        "answer": 1,
+        "why": "The deck frames threat modeling as identify and evaluate: assets first, then threats and vulnerabilities."
+      },
+      {
+        "q": "Why are IP addresses and ports no longer enough for security policy?",
+        "choices": [
+          "Modern applications use dynamic ports, cloud services, encryption, and shared infrastructure",
+          "NAT is no longer used anywhere",
+          "Firewalls cannot read Layer 3 headers",
+          "IPv4 has been fully retired"
+        ],
+        "answer": 0,
+        "why": "The firewall discussion answer says Webex and Microsoft 365 are hard to identify by address and port alone."
+      },
+      {
+        "q": "Which placement best matches IPsec and ARP on the course OSI map?",
+        "choices": [
+          "Physical layer only",
+          "Application layer, with HTTP and SMTP",
+          "Presentation layer only",
+          "Network layer, with IP and ICMP"
+        ],
+        "answer": 3,
+        "why": "The OSI attack map places IP, ARP, IPsec, and ICMP together at the network layer. TLS sits with TCP and UDP at transport."
+      },
+      {
+        "q": "Ransomware and destructive malware primarily cause which business outcome?",
+        "choices": [
+          "Faster OSPF convergence",
+          "Loss of availability, because systems or data are encrypted or disabled",
+          "Lower free-space path loss",
+          "Automatic SGT assignment"
+        ],
+        "answer": 1,
+        "why": "The consequences activity lists ransomware under service disruption. Exfiltration is a separate outcome."
+      },
+      {
+        "q": "Security awareness in the architecture discussion is described as what?",
+        "choices": [
+          "A substitute for firewalls and IPS",
+          "Required only for guest wireless",
+          "Often overlooked, and improved through education and training, with moderation",
+          "The same process as a vulnerability scan"
+        ],
+        "answer": 2,
+        "why": "The slide says awareness is often overlooked, can be overdone, and grows through lectures, videos, and training."
+      },
+      {
+        "q": "A privileged-access design that gives a helpdesk user only the rights needed for that job illustrates which principle?",
+        "choices": [
+          "Least privilege",
+          "Open 802.1X mode",
+          "Full-mesh overlay",
+          "Channel bonding"
+        ],
+        "answer": 0,
+        "why": "Privileged access management grants only necessary permissions and can keep a read-only user separate from a full admin."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "day": "Day 1 · Security concepts",
+    "title": "Firewalls and IPS",
+    "questions": [
+      {
+        "q": "How does a stateless packet filter differ from a stateful firewall?",
+        "choices": [
+          "It tracks the connection and allows return traffic for an approved flow",
+          "It judges each packet alone using addresses, ports, and protocol",
+          "It always decrypts TLS",
+          "It identifies applications with NBAR"
+        ],
+        "answer": 1,
+        "why": "A packet filter, such as a router ACL, evaluates packets independently. A stateful firewall allows or blocks based on connection state."
+      },
+      {
+        "q": "In which firewall mode is forwarding based on MAC addresses rather than IP routing?",
+        "choices": [
+          "StackWise mode",
+          "GetVPN mode",
+          "Transparent mode",
+          "Routed mode"
+        ],
+        "answer": 2,
+        "why": "Routed mode is a Layer 3 firewall. Transparent mode is a Layer 2 firewall."
+      },
+      {
+        "q": "What does a zone represent in a zone-based policy firewall?",
+        "choices": [
+          "A Wi-Fi channel",
+          "A single access-list line",
+          "A collection of networks reached through one or more interfaces that share a security grouping",
+          "An MPLS transport label"
+        ],
+        "answer": 2,
+        "why": "ZBFW treats a zone as networks reachable over a router interface or a specific set of interfaces, then applies policy between zones."
+      },
+      {
+        "q": "Which capability set distinguishes a next-generation firewall from a traditional address-and-port firewall?",
+        "choices": [
+          "Only static NAT",
+          "Only MAC learning",
+          "Application visibility, intrusion prevention, and deeper inspection beyond the 5-tuple",
+          "Only spanning-tree root election"
+        ],
+        "answer": 2,
+        "why": "The deck says NGFWs add granular application visibility and other security functions. Traditional firewalls stop at source, destination, and port."
+      },
+      {
+        "q": "Cisco Secure Firewall Threat Defense splits work between which two engines?",
+        "choices": [
+          "OMP for encryption and NHRP for IPS",
+          "LISP for policy and VXLAN for NAT",
+          "CAPWAP for routing and GRE for malware",
+          "LINA for Layers 1–4 and Snort for threat detection"
+        ],
+        "answer": 3,
+        "why": "LINA handles routing, ACL filtering, and firewall functions. Snort is the detection engine reached through the data acquisition layer."
+      },
+      {
+        "q": "Which order matches the firewall flow in the course?",
+        "choices": [
+          "Application ID before the packet arrives",
+          "Egress, then the packet is parsed",
+          "Ingress and parsing, rule match, state handling, NAT, security services, egress",
+          "NAT first, then spanning tree, then DNS"
+        ],
+        "answer": 2,
+        "why": "The six steps are ingress and parsing, rule checks, session state, NAT, security services such as IPS, and the egress decision."
+      },
+      {
+        "q": "An inline IPS differs from a passive tap or IDS because it does what?",
+        "choices": [
+          "Replaces the routing table",
+          "Assigns Security Group Tags",
+          "Inspects the live traffic path and can drop malicious packets",
+          "Only copies traffic and alerts"
+        ],
+        "answer": 2,
+        "why": "Inline IPS sits in the forwarding path and can block. A tap or passive sensor detects without dropping the original flow."
+      },
+      {
+        "q": "Signature-based IPS detection is best described as what?",
+        "choices": [
+          "Learning a baseline and alerting on any deviation only",
+          "Matching known threat patterns",
+          "Encrypting the payload with ESP",
+          "Counting MAC addresses on a port"
+        ],
+        "answer": 1,
+        "why": "The IPS methods slide separates signature matching of known threats from anomaly or behavioral detection."
+      },
+      {
+        "q": "Where does the course say an IPS has a blind spot?",
+        "choices": [
+          "Unicast routing updates only",
+          "PoE power budgets",
+          "Encrypted payloads that it cannot inspect",
+          "Console cables"
+        ],
+        "answer": 2,
+        "why": "Encrypted traffic limits inspection. The design note says to combine IPS with firewall policy, DNS intelligence, endpoint telemetry, and SIEM."
+      },
+      {
+        "q": "NGFW design guidance in the module highlights which operational risk?",
+        "choices": [
+          "Every branch must use the same public IP",
+          "Policy complexity grows as rules and exceptions accumulate, and NAT can hide the true endpoints",
+          "Application identification lowers CPU in every case",
+          "Firewalls remove the need for any logging"
+        ],
+        "answer": 1,
+        "why": "The design-implications slide calls out growing policy complexity and NAT hiding endpoints, plus performance effects from poor rule design."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "day": "Day 1 · Security concepts",
+    "title": "Identity, AAA, and encryption",
+    "questions": [
+      {
+        "q": "In AAA, authorization answers which question?",
+        "choices": [
+          "Which AP did you roam to?",
+          "What did you do?",
+          "Who are you?",
+          "What are you allowed to do?"
+        ],
+        "answer": 3,
+        "why": "Authentication is identity. Authorization is the allowed access. Accounting records the activity."
+      },
+      {
+        "q": "In wired 802.1X, which device is the authenticator?",
+        "choices": [
+          "The public certificate authority",
+          "The user laptop",
+          "The access switch",
+          "The identity store such as Active Directory"
+        ],
+        "answer": 2,
+        "why": "The supplicant is the client. The switch or AP is the authenticator. RADIUS or ISE is the authentication server."
+      },
+      {
+        "q": "Why does the course say 802.1X matters at the access edge?",
+        "choices": [
+          "Devices stay off the network until they authenticate, and policy such as VLAN, ACL, or SGT can be applied per user or device",
+          "It replaces DHCP",
+          "It bonds 160 MHz channels",
+          "It encrypts the WAN by itself"
+        ],
+        "answer": 0,
+        "why": "802.1X blocks unauthenticated devices and enables per-user or per-device segmentation, which limits lateral movement."
+      },
+      {
+        "q": "Which Wi-Fi enterprise authentication option uses certificates rather than only a shared password?",
+        "choices": [
+          "802.1X",
+          "A single pre-shared key for every device",
+          "MAC authentication with no server",
+          "Open authentication with no protection"
+        ],
+        "answer": 0,
+        "why": "The Wi-Fi authentication slide lists 802.1X with certificates alongside PSK, open, and web authentication, which rely on passwords or a MAC identifier."
+      },
+      {
+        "q": "What is the role of an identity provider in single sign-on?",
+        "choices": [
+          "It selects a Wi-Fi channel",
+          "It validates the user once and issues a token so approved applications do not each ask for a password",
+          "It builds IPsec tunnels between branches",
+          "It assigns MPLS labels"
+        ],
+        "answer": 1,
+        "why": "SSO is one login for many applications. A trusted identity provider authenticates the user and the browser presents a token to each app."
+      },
+      {
+        "q": "MACsec, IEEE 802.1AE, protects traffic in which way?",
+        "choices": [
+          "It encrypts IP packets end to end across any routed network",
+          "It encrypts Ethernet frames hop by hop on a single link",
+          "It encrypts only the application payload, as TLS does",
+          "It hides SSIDs from clients"
+        ],
+        "answer": 1,
+        "why": "MACsec is Layer 2, link by link, and fits campus or data-center links and WAN Ethernet. IPsec is the Layer 3 tunnel."
+      },
+      {
+        "q": "Which IPsec choice provides encryption and integrity and is the usual selection?",
+        "choices": [
+          "AH",
+          "ESP",
+          "ARP",
+          "OFDM"
+        ],
+        "answer": 1,
+        "why": "ESP provides encryption and integrity. AH provides integrity only and is rarely used."
+      },
+      {
+        "q": "How do symmetric and asymmetric encryption differ in the course?",
+        "choices": [
+          "Asymmetric is only used for Wi-Fi beacons",
+          "Symmetric uses one shared secret and is fast for bulk data; asymmetric uses a public and private key pair",
+          "Symmetric requires a certificate for every packet; asymmetric uses no keys",
+          "They are two names for MACsec"
+        ],
+        "answer": 1,
+        "why": "Symmetric encryption uses one shared key. Asymmetric encryption uses a key pair for exchange and identity. Key exchange often wraps a symmetric session key."
+      },
+      {
+        "q": "TLS protects traffic in which scope?",
+        "choices": [
+          "Only inside one VRF",
+          "Between applications, such as a browser and a server, regardless of the network path",
+          "Only on the first Ethernet hop",
+          "Only on the wireless backhaul radio"
+        ],
+        "answer": 1,
+        "why": "TLS is application-layer, end-to-end protection for HTTPS, APIs, and SaaS, even if the path is untrusted."
+      },
+      {
+        "q": "“Harvest now, decrypt later” refers to which risk?",
+        "choices": [
+          "An attacker records encrypted sessions today and decrypts them later if a quantum computer breaks RSA, Diffie-Hellman, or elliptic-curve methods",
+          "A switch stack loses its master during an upgrade",
+          "LEO satellites replace GEO latency",
+          "Guest traffic is bridged into the corporate VLAN"
+        ],
+        "answer": 0,
+        "why": "The quantum slides say today’s public-key methods can fall, so recorded traffic is a future disclosure risk. The suggested path is crypto agility and hybrid post-quantum transition."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "day": "Day 2 · WAN",
+    "title": "Physical access",
+    "questions": [
+      {
+        "q": "WAN access technologies such as xDSL, cable, fiber, cellular, and satellite sit primarily at which layers?",
+        "choices": [
+          "Layers 5 and 6 only",
+          "Layers 1 and 2",
+          "The MPLS control plane only",
+          "The application layer only"
+        ],
+        "answer": 1,
+        "why": "The OSI mapping slide says these access technologies define how bits and frames cross the last mile."
+      },
+      {
+        "q": "The demarcation point separates which two domains?",
+        "choices": [
+          "Customer premises equipment and the service provider’s equipment",
+          "A VRF and a VLAN",
+          "The campus core and the access closet",
+          "The supplicant and the authenticator"
+        ],
+        "answer": 0,
+        "why": "The enterprise edge meets the provider edge at the demarc. The modem or handoff is the boundary."
+      },
+      {
+        "q": "Which statement matches xDSL in the course?",
+        "choices": [
+          "It is a low-earth-orbit constellation",
+          "It requires an amplifier about every 500 meters on coaxial cable",
+          "It is a passive optical splitter design",
+          "It uses the telephone line, speeds are asymmetric, and distance and line quality matter"
+        ],
+        "answer": 3,
+        "why": "xDSL rides the phone line through a DSLAM. Cable is the coaxial last-mile technology with amplifiers."
+      },
+      {
+        "q": "Which description matches cable access in the deck?",
+        "choices": [
+          "Coaxial last mile, amplifiers about every 500 meters, and asymmetric speeds",
+          "Wi-Fi 7 multi-link operation",
+          "A private TDM circuit with symmetric guaranteed bandwidth",
+          "Single-mode fiber to a passive splitter"
+        ],
+        "answer": 0,
+        "why": "The cable slide cites coaxial last-mile access, amplifiers, and example speeds up to about 500 Mbps down and 50 Mbps up."
+      },
+      {
+        "q": "In a passive optical network, where does the optical line terminal sit?",
+        "choices": [
+          "Inside the Starlink router",
+          "In every guest hotel room",
+          "At the provider central office, aggregating the PON",
+          "On the campus core supervisor"
+        ],
+        "answer": 2,
+        "why": "The OLT terminates the PON at the central office. ONTs or ONUs sit at the customer premises. A splitter shares the fiber."
+      },
+      {
+        "q": "How does the course contrast passive and active optical access?",
+        "choices": [
+          "Both are wireless-only",
+          "Passive networks always have higher latency than GEO satellite",
+          "Passive optical networks reach about 20 km at 1–10 Gbps; active optical networks reach beyond 100 km and up to hundreds of Gbps",
+          "Active networks cannot carry voice"
+        ],
+        "answer": 2,
+        "why": "The FTTX slide gives those reach and speed ranges and says fiber is how providers deploy new fixed access."
+      },
+      {
+        "q": "Which customer situations does the course associate with GPON-style fiber?",
+        "choices": [
+          "Only satellite backhaul",
+          "Only inter-data-center dark fiber at 400 Gbps",
+          "Service providers, hotels and resorts, and verticals such as hospitality, healthcare, and education",
+          "Only MPLS P routers"
+        ],
+        "answer": 2,
+        "why": "GPON is positioned for cost-efficient multi-subscriber access and for campuses, hotels, healthcare, and education."
+      },
+      {
+        "q": "Cellular access is presented as a strong fit for which uses?",
+        "choices": [
+          "A metered backup path, or a primary path for a temporary site such as a pop-up shop",
+          "An unmetered full-mesh core",
+          "A replacement for MACsec on every campus uplink",
+          "A Layer 2 data-center interconnect"
+        ],
+        "answer": 0,
+        "why": "Cellular is metered, coverage-sensitive, commonly a secondary line, and often the primary line for pop-up locations."
+      },
+      {
+        "q": "How do LEO and GEO satellite services compare in the deck?",
+        "choices": [
+          "LEO is on the order of 20 ms and hundreds of Mbps down; GEO is about 600 ms with lower typical throughput",
+          "LEO cannot be used as enterprise access",
+          "Both present the same latency as metro fiber",
+          "GEO is always faster and lower latency"
+        ],
+        "answer": 0,
+        "why": "Starlink and OneWeb are the LEO examples. Viasat and HughesNet illustrate high-latency GEO service."
+      },
+      {
+        "q": "When a branch moves from 100 Mbps to 1 Gbps access, what does the platform-selection discussion conclude?",
+        "choices": [
+          "Security features can be removed because the circuit is faster",
+          "Speed alone does not size the router; traffic demand, growth, and enabled services still matter",
+          "The router must be replaced automatically",
+          "Only the firewall model must change"
+        ],
+        "answer": 1,
+        "why": "The activity answer says historical WAN speed is no longer the only sizing input."
+      }
+    ]
+  }
+]
